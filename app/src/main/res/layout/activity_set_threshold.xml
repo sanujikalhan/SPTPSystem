@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="16dp">
+
+    <!-- Card for Smart Plug 1 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_smart_plug_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Title Section -->
+            <TextView
+                android:id="@+id/title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Power Management System"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp" />
+
+            <!-- Smart Plug Label -->
+            <TextView
+                android:id="@+id/smart_plug_label1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/holo_orange_dark"
+                android:padding="8dp"
+                android:text="Smart Plug 01"
+                android:textColor="#455A64"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title1" />
+
+            <!-- Threshold Limit Section -->
+            <TextView
+                android:id="@+id/threshold_label1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set Threshold Limit :"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toBottomOf="@+id/smart_plug_label1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="12dp" />
+
+            <EditText
+                android:id="@+id/threshold_input1"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:hint="Enter value"
+                android:inputType="number"
+                android:backgroundTint="@android:color/darker_gray"
+                android:padding="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/threshold_label1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp" />
+
+            <!-- Automatic ON/OFF Section -->
+            <TextView
+                android:id="@+id/auto_toggle_label1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Automatic OFF/ON"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toBottomOf="@+id/threshold_input1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="12dp" />
+
+            <Button
+                android:id="@+id/enable_button1"
+                android:layout_width="120dp"
+                android:layout_height="48dp"
+                android:text="Enable"
+                android:backgroundTint="@android:color/holo_green_dark"
+                android:textColor="@android:color/white"
+                app:layout_constraintTop_toBottomOf="@+id/auto_toggle_label1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/disable_button1"
+                android:layout_marginTop="8dp"
+                app:layout_constraintHorizontal_chainStyle="spread" />
+
+            <Button
+                android:id="@+id/disable_button1"
+                android:layout_width="120dp"
+                android:layout_height="48dp"
+                android:text="Disable"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:textColor="@android:color/white"
+                app:layout_constraintTop_toBottomOf="@+id/auto_toggle_label1"
+                app:layout_constraintStart_toEndOf="@+id/enable_button1"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp" />
+
+            <!-- Alert Method Section -->
+            <TextView
+                android:id="@+id/alert_method_label1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Alert Method"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toBottomOf="@+id/disable_button1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="12dp" />
+
+            <LinearLayout
+                android:id="@+id/alert_method_container1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/alert_method_label1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp">
+
+                <CheckBox
+                    android:id="@+id/ring_checkbox1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ring"
+                    android:textColor="@android:color/black"
+                    android:layout_marginEnd="16dp" />
+
+                <CheckBox
+                    android:id="@+id/popup_checkbox1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pop up msg"
+                    android:textColor="@android:color/black" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Card for Smart Plug 2 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_smart_plug_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_smart_plug_1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Title Section -->
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Power Management System"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp" />
+
+            <!-- Smart Plug Label -->
+            <TextView
+                android:id="@+id/smart_plug_label2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/holo_orange_dark"
+                android:padding="8dp"
+                android:text="Smart Plug 02"
+                android:textColor="#455A64"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title" />
+
+            <!-- Threshold Limit Section -->
+            <TextView
+                android:id="@+id/threshold_label2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set Threshold Limit :"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toBottomOf="@+id/smart_plug_label2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="12dp" />
+
+            <EditText
+                android:id="@+id/threshold_input2"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:hint="Enter value"
+                android:inputType="number"
+                android:backgroundTint="@android:color/darker_gray"
+                android:padding="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/threshold_label2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp" />
+
+            <!-- Automatic ON/OFF Section -->
+            <TextView
+                android:id="@+id/auto_toggle_label2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Automatic OFF/ON"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toBottomOf="@+id/threshold_input2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="12dp" />
+
+            <Button
+                android:id="@+id/enable_button2"
+                android:layout_width="120dp"
+                android:layout_height="48dp"
+                android:text="Enable"
+                android:backgroundTint="@android:color/holo_green_dark"
+                android:textColor="@android:color/white"
+                app:layout_constraintTop_toBottomOf="@+id/auto_toggle_label2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/disable_button2"
+                android:layout_marginTop="8dp"
+                app:layout_constraintHorizontal_chainStyle="spread" />
+
+            <Button
+                android:id="@+id/disable_button2"
+                android:layout_width="120dp"
+                android:layout_height="48dp"
+                android:text="Disable"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:textColor="@android:color/white"
+                app:layout_constraintTop_toBottomOf="@+id/auto_toggle_label2"
+                app:layout_constraintStart_toEndOf="@+id/enable_button2"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp" />
+
+            <!-- Alert Method Section -->
+            <TextView
+                android:id="@+id/alert_method_label2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Alert Method"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toBottomOf="@+id/disable_button2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="12dp" />
+
+            <LinearLayout
+                android:id="@+id/alert_method_container2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/alert_method_label2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp">
+
+                <CheckBox
+                    android:id="@+id/ring_checkbox2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ring"
+                    android:textColor="@android:color/black"
+                    android:layout_marginEnd="16dp" />
+
+                <CheckBox
+                    android:id="@+id/popup_checkbox2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pop up msg"
+                    android:textColor="@android:color/black" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
