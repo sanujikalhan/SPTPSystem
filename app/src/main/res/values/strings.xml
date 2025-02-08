@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">SPTM_systerm</string>
+    <string name="email_address">EmailAddress</string>
+    <string name="Password">Password</string>
+    <string name="login">Login</string>
+    <string name="SignUp">SignUp</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="address">Address</string>
+    <string name="email">Email</string>
+    <string name="nic">NIC</string>
+    <string name="location">Location</string>
+    <string name="verification">Verification</string>
+    <string name="verify">Verify</string>
+    <string name="registration">Registration</string>
+    <string name="Register_me">registerme</string>
+    <!-- Strings used for fragments for navigation -->
+
+
+</resources>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <!-- CardView for Border and Padding -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loyality Points"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="24dp"/>
+
+            <!-- Update for Rewards Button -->
+            <Button
+                android:id="@+id/updateRewardsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update for Rewards"
+                android:textSize="18sp"
+                android:backgroundTint="@android:color/holo_blue_light"
+                android:textColor="@android:color/white"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Current Earned Rewards Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Current Earned Rewards"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:paddingBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/currentRewardsInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter current rewards"
+                android:inputType="number"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Redeem Rewards Button -->
+            <Button
+                android:id="@+id/redeemRewardsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Redeem Rewards"
+                android:textSize="18sp"
+                android:backgroundTint="@android:color/holo_green_light"
+                android:textColor="@android:color/white"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Next Target for Rewards Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next Target for Rewards"
+                android:textSize="16sp"
+                android:textColor="@android:color/holo_red_dark"
+                android:paddingBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/nextTargetInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter next target"
+                android:inputType="number"
+                android:padding="12dp"
+              />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
