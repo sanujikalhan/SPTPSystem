@@ -2,8 +2,13 @@ package com.example.sptm_systerm;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -12,8 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.navigation.NavigationView;
 import com.thingclips.smart.home.sdk.ThingHomeSdk;
 import com.thingclips.smart.home.sdk.bean.HomeBean;
 import com.thingclips.smart.home.sdk.builder.ActivatorBuilder;
@@ -27,7 +38,6 @@ import com.thingclips.smart.sdk.enums.ActivatorEZStepCode;
 import com.thingclips.smart.sdk.enums.ActivatorModelEnum;
 
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,8 +48,8 @@ public class Home extends AppCompatActivity {
     String HomeName = "myhome";
     String[] rooms= {"room1","room2","room3","room4"};
     private HomeBean currentHomeBeam;
-    private String ssid = "Redmi Note 13"; //"NACK899""Redmi Note 13"
-    private String password = "chathurikarich"; //"54844bF1"
+    private String ssid = "ERANDA"; //"NACK899""Redmi Note 13"
+    private String password = "19765320"; //"54844bF1"
     private DeviceBean currentDeviceBeam;
     private IThingActivator mThingActivator;
     private boolean isPlugOn = false;
@@ -53,6 +63,13 @@ public class Home extends AppCompatActivity {
     private static long homeId;
     private String deviceNam;
     private LinearLayout linearLayout;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
+    private ActionBarDrawerToggle toggle;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +77,6 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         // Initialize the TextViews for device information
-
         deviceName = findViewById(R.id.devicename);
         deviceId = findViewById(R.id.deviceid);
         productId = findViewById(R.id.productid);
@@ -74,6 +90,57 @@ public class Home extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
         linearLayout= findViewById(R.id.linearL);
         deviceStorage = new DeviceStorage(this);
+        // Initialize views
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        // Disable default toggle
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.setDrawerIndicatorEnabled(true);  // Disable default hamburger icon
+        toggle.syncState();
+
+        // Set custom icon for the toggle button
+        if (getSupportActionBar() != null) {
+            Drawable drawable = getResources().getDrawable(R.drawable.menu);
+            Drawable resizedDrawable = resizeDrawable(drawable, 24, 24); // Resize if needed
+            getSupportActionBar().setHomeAsUpIndicator(resizedDrawable);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        // Handle Navigation Item Clicks
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+
+                if (id == R.id.nav_view_bill) {
+                    // Open View Electricity Bill Activity
+                    startActivity(new Intent(Home.this, ElectricityBill.class));
+                } else if (id == R.id.nav_lodge_complaint) {
+                    // Open Lodge Complaint Activity
+                    startActivity(new Intent(Home.this, LodgeComplaint.class));
+                } else if (id == R.id.nav_generate_bill) {
+                    // Open Bill Generation Activity
+                    startActivity(new Intent(Home.this, BillGeneration.class));
+                } else if (id == R.id.nav_user_loyalty_points) {
+                    // Open User Loyalty Points Activity
+                    startActivity(new Intent(Home.this, LoyaltyPoints.class));
+                } else if (id == R.id.nav_complaint_status) {
+                    // Open Complaint Status Activity
+                    startActivity(new Intent(Home.this, ComplaintStatus.class));
+                } else if (id == R.id.nav_logout) {
+                    // Handle logout
+                    Toast.makeText(Home.this, "Logged out", Toast.LENGTH_SHORT).show();
+                }
+
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+
 
         if(deviceStorage.getDevId() !=null){
             queryHomeDetail();
@@ -148,6 +215,29 @@ public class Home extends AppCompatActivity {
 
     }
 
+    private Drawable resizeDrawable(Drawable image, int width, int height) {
+        if (image instanceof BitmapDrawable) {
+            Bitmap bitmap = ((BitmapDrawable) image).getBitmap();
+            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, width, height, true);
+            return new BitmapDrawable(getResources(), resizedBitmap);
+        } else {
+            return image; // Return original if not BitmapDrawable
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
     private void createHome(String home, List<String> roomList) {
         ThingHomeSdk.getHomeManagerInstance().createHome(home, 0, 0, "", roomList, new IThingHomeResultCallback() {
             @Override
@@ -198,7 +288,7 @@ public class Home extends AppCompatActivity {
                 .setContext(this)
                 .setPassword(password)
                 .setActivatorModel(ActivatorModelEnum.THING_EZ)
-                .setTimeOut(100)
+                .setTimeOut(1000)
                 .setToken(token)
                 .setListener(new IThingSmartActivatorListener() {
 
@@ -258,6 +348,10 @@ public class Home extends AppCompatActivity {
                 new IResultCallback() {
                     @Override
                     public void onSuccess() {
+                        sharedPreferences = getSharedPreferences("DeviceTiming", Context.MODE_PRIVATE);
+                        editor = sharedPreferences.edit();
+                        editor.putBoolean("countdown", true);
+                        editor.apply();
                         Toast.makeText(Home.this, "Plug turned " + (isPlugOn ? "on" : "off"), Toast.LENGTH_SHORT).show();
                     }
 

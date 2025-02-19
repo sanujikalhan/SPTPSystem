@@ -14,8 +14,9 @@
     <string name="verification">Verification</string>
     <string name="verify">Verify</string>
     <string name="registration">Registration</string>
-    <string name="Register_me">registerme</string>
-    <!-- Strings used for fragments for navigation -->
+    <string name="Register_me">Register Me</string>
+    <string name="open">Open Navigation</string>
+    <string name="close">Close Navigation</string>
 
 
 </resources>

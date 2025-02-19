@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
     private int progress = 0;
     private LoginStorage loginStorage;
     private FirebaseAuth mAuth;
+    private FirebaseService firebaseService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,12 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        firebaseService = new FirebaseService();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null  && ThingHomeSdk.getUserInstance().getUser() != null) {
+            redirectToHome();
+        }
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +100,12 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void redirectToHome() {
+        Intent intent = new Intent(LoginActivity.this, Home.class);
+        startActivity(intent);
+        finish(); // Prevents user from returning to LoginActivity
     }
 
 
@@ -136,6 +149,18 @@ public class LoginActivity extends AppCompatActivity {
                             progress = 25;
                             progressBar.setProgress(progress);
                             smartHomeLogin(LoginActivity.this, email, password);
+                            firebaseService.getUserRole(
+                                    role -> {
+                                        // Successfully retrieved role
+                                        GlobalVariable.userRole = role;
+                                        Log.d(TAG, "User Role: " + role);
+                                    },
+                                    e -> {
+                                        // Failed to retrieve role
+                                        Log.e(TAG, "Error getting user role", e);
+                                        Toast.makeText(LoginActivity.this, "Failed to get user role", Toast.LENGTH_SHORT).show();
+                                    }
+                            );
                         } else {
                             progressBar.setVisibility(View.GONE);
                             // If sign in fails, display a message to the user.
@@ -149,7 +174,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
 }
+
 
 

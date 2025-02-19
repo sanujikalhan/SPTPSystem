@@ -1,8 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.SPTM_systerm" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
 
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <style name="Theme.SPTM_systerm" parent="Base.Theme.SPTM_systerm">
+        <!-- Transparent system bars for edge-to-edge. -->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
     </style>
 </resources>

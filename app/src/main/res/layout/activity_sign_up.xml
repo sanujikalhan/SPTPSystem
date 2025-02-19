@@ -5,95 +5,142 @@
     android:layout_height="match_parent"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingTop="20dp">
 
+    <!-- First Name -->
     <EditText
         android:id="@+id/firstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:hint="@string/first_name"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:inputType="textCapWords" />
 
+    <!-- Last Name -->
     <EditText
         android:id="@+id/lastName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:hint="@string/last_name"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:inputType="textCapWords" />
 
+    <!-- Mobile Number -->
     <EditText
         android:id="@+id/MobileNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:hint="@string/mobile_number"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:inputType="phone" />
 
+    <!-- Address -->
     <EditText
         android:id="@+id/Address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:hint="@string/address"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:inputType="textPostalAddress" />
 
+    <!-- Email -->
     <EditText
         android:id="@+id/Email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:hint="@string/email"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:inputType="textEmailAddress" />
+
+    <!-- Password -->
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:hint="@string/Password"
-        android:minHeight="48dp" />
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_gravity="center"
-        android:max="100"
-        android:progress="0"
-        android:indeterminate="false" />
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:inputType="textPassword" />
+
+    <!-- NIC -->
     <EditText
         android:id="@+id/NIC"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:hint="@string/nic"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:inputType="text" />
 
+    <!-- Location -->
     <EditText
         android:id="@+id/Location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:hint="@string/location"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:inputType="text" />
 
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:max="100"
+        android:progress="0"
+        android:indeterminate="false" />
 
+    <!-- Submit Button -->
     <Button
         android:id="@+id/Submit"
-        android:name="Submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/black"
         android:text="@string/verify"
-        android:textSize="25sp"/>
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:padding="12dp" />
 
+    <!-- Verification Code -->
     <EditText
         android:id="@+id/myVerification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="@string/verification"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:inputType="number" />
 
+    <!-- Verify Button -->
     <Button
         android:id="@+id/verify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/black"
         android:text="@string/registration"
-        android:textSize="25sp"/>
-
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:padding="12dp" />
 
 </LinearLayout>

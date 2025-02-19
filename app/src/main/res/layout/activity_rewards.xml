@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/rewardsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Power Management System"
+        android:textSize="20sp"
+        android:layout_marginBottom="20dp"
+        android:textAlignment="center"/>
+
+    <Button
+        android:id="@+id/updateRewardsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update for rewards"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#FFEB3B"/>
+
+    <TextView
+        android:id="@+id/currentRewards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current earned rewards: 0"
+        android:textSize="18sp"
+        android:layout_marginBottom="20dp"
+        android:textAlignment="center"/>
+
+    <Button
+        android:id="@+id/redeemRewardsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Redeem rewards"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#FFEB3B"/>
+
+    <TextView
+        android:id="@+id/nextTarget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next target for earn rewards: 100 points"
+        android:textSize="18sp"
+        android:textColor="#FF0000"
+        android:layout_marginBottom="20dp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/loyaltyPoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Loyalty points: 0"
+        android:textSize="18sp"
+        android:textAlignment="center"/>
+
+</LinearLayout>

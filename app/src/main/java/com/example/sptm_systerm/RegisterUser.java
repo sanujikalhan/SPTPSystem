@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -28,12 +30,16 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RegisterUser extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private Spinner spinnerUserRole;
+    private String selectedRole = "User";
 
     private  String emails,passwords,firstname,lastnames,addresses,nics,mobiles ;
     @Override
@@ -49,9 +55,15 @@ public class RegisterUser extends AppCompatActivity {
         EditText nic= findViewById(R.id.NIC);
         EditText mobile= findViewById(R.id.MobileNumber);
         Button  register = findViewById(R.id.Register);
+        spinnerUserRole = findViewById(R.id.spinnerUserRole);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        List<String> roles = Arrays.asList("Admin", "User", "Manager");
+
+        // Populate Spinner with user roles
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, roles);
+        spinnerUserRole.setAdapter(adapter);
 
 
         register.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +76,7 @@ public class RegisterUser extends AppCompatActivity {
                 addresses = address.getText().toString();
                 nics =nic.getText().toString();
                 mobiles = mobile.getText().toString();
+                selectedRole = spinnerUserRole.getSelectedItem().toString();
                 registerUser();
             }
         });
@@ -80,7 +93,7 @@ public class RegisterUser extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            addUserToFirestore(user.getUid(), firstname,lastnames,addresses,nics,emails,mobiles);
+                            addUserToFirestore(user.getUid(), firstname,lastnames,addresses,nics,emails,mobiles, selectedRole);
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -95,7 +108,7 @@ public class RegisterUser extends AppCompatActivity {
 
     }
 
-    private void addUserToFirestore(String uid, String firstname,String lastnames,String addresses, String nics,String emails,String mobiles) {
+    private void addUserToFirestore(String uid, String firstname,String lastnames,String addresses, String nics,String emails,String mobiles, String selectedRole) {
 
 
         // Create a user data map
@@ -106,6 +119,7 @@ public class RegisterUser extends AppCompatActivity {
         userData.put("addresses", addresses);
         userData.put("nic", nics);
         userData.put("mobile", mobiles);
+        userData.put("role", selectedRole);
 
 
         // Add data to Firestore

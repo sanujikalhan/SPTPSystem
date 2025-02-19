@@ -6,11 +6,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:name=".tuyaApp"
@@ -24,6 +24,36 @@
         android:theme="@style/Theme.SPTM_systerm"
         tools:replace="android:allowBackup, android:supportsRtl"
         tools:targetApi="34">
+        <activity
+            android:name=".ComplaintStatus"
+            android:exported="false" />
+        <activity
+            android:name=".LoyaltyPoints"
+            android:exported="false" />
+        <activity
+            android:name=".BillGeneration"
+            android:exported="false" />
+        <activity
+            android:name=".SubscriptionMenu"
+            android:exported="false" />
+        <activity
+            android:name=".InterruptionCalendar"
+            android:exported="false" />
+        <activity
+            android:name=".PastComplaints"
+            android:exported="false" />
+        <activity
+            android:name=".LodgeComplaint"
+            android:exported="false" />
+        <activity
+            android:name=".ElectricityBill"
+            android:exported="false" />
+        <activity
+            android:name=".Rewards"
+            android:exported="false" />
+        <activity
+            android:name=".Payment"
+            android:exported="false" />
         <activity
             android:name=".LoyalityPoints"
             android:exported="false" />

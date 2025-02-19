@@ -1,0 +1,68 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Home Menu Item -->
+    <item
+        android:id="@+id/nav_home"
+        android:title="Home"
+        android:icon="@drawable/home"
+        android:orderInCategory="1" />
+
+    <!-- View Electricity Bill Menu Item -->
+    <item
+        android:id="@+id/nav_view_bill"
+        android:title="View Electricity Bill"
+        android:icon="@drawable/bill"
+        android:orderInCategory="2" />
+
+    <!-- Lodge Complaint Menu Item -->
+    <item
+        android:id="@+id/nav_lodge_complaint"
+        android:title="Lodge Complaint"
+        android:icon="@drawable/satisfaction_scale"
+        android:orderInCategory="3" />
+
+    <!-- Generate Bill Menu Item -->
+    <item
+        android:id="@+id/nav_generate_bill"
+        android:title="Generate Bill"
+        android:icon="@drawable/bill_gen"
+        android:orderInCategory="4" />
+
+    <!-- User Loyalty Points Menu Item -->
+    <item
+        android:id="@+id/nav_user_loyalty_points"
+        android:title="User Loyalty Points"
+        android:icon="@drawable/point"
+        android:orderInCategory="5" />
+
+    <!-- Complaint Status Menu Item -->
+    <item
+        android:id="@+id/nav_complaint_status"
+        android:title="Complaint Status"
+        android:icon="@drawable/status_update"
+        android:orderInCategory="6" />
+
+    <!-- Profile Menu Item -->
+    <item
+        android:id="@+id/nav_profile"
+        android:title="Profile"
+        android:icon="@drawable/user"
+        android:orderInCategory="7" />
+
+    <!-- Settings Menu Item -->
+    <item
+        android:id="@+id/nav_settings"
+        android:title="Settings"
+        android:icon="@drawable/settings"
+        android:orderInCategory="8" />
+
+    <!-- Logout Menu Item -->
+    <item
+        android:id="@+id/nav_logout"
+        android:title="Logout"
+        android:icon="@drawable/logout"
+        android:orderInCategory="9" />
+
+</menu>
+

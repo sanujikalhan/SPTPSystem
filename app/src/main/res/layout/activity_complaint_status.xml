@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Power Management System"
+        android:textSize="20sp"
+        android:layout_marginBottom="20dp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/complaintTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Complaint 1"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/complaintData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data"
+        android:textSize="16sp"/>
+
+    <RadioGroup
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton android:id="@+id/attendRadioButton" android:text="Attend" />
+        <RadioButton android:id="@+id/pendingRadioButton" android:text="Pending" />
+        <RadioButton android:id="@+id/doneRadioButton" android:text="Done" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/submitComplaintStatusButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:backgroundTint="#FFEB3B"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>

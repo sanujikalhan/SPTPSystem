@@ -5,58 +5,73 @@
     android:layout_height="match_parent"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
 
+  <!-- ImageView centered at the top -->
   <ImageView
       android:id="@+id/imageView"
-      android:layout_width="339dp"
-      android:layout_height="335dp"
-      android:layout_gravity="center"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       android:layout_marginTop="50dp"
+      android:adjustViewBounds="true"
+      android:maxWidth="339dp"
+      android:maxHeight="335dp"
       app:srcCompat="@drawable/pm" />
+
+  <!-- ProgressBar centered below the ImageView -->
   <ProgressBar
       android:id="@+id/progressBar"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:visibility="gone"
-      android:layout_gravity="center"
+      android:layout_marginTop="20dp"
       android:max="100"
       android:progress="0"
       android:indeterminate="false" />
 
+  <!-- Email EditText -->
   <EditText
       android:id="@+id/userName"
       android:layout_width="match_parent"
       android:layout_height="50dp"
-      android:layout_marginTop="50dp"
-      android:hint="@string/email_address" />
+      android:layout_marginTop="30dp"
+      android:hint="@string/email_address"
+      android:inputType="textEmailAddress"
+      android:padding="10dp" />
 
+  <!-- Password EditText -->
   <EditText
       android:id="@+id/password"
       android:layout_width="match_parent"
       android:layout_height="50dp"
       android:layout_marginTop="10dp"
       android:hint="@string/Password"
-      android:inputType="textPassword"/> <!-- Optional: add this for password input type -->
+      android:inputType="textPassword"
+      android:padding="10dp" />
 
+  <!-- Login Button -->
   <Button
       android:id="@+id/Login"
-      android:layout_width="200dp"
+      android:layout_width="match_parent"
       android:layout_height="60dp"
-      android:layout_gravity="center"
       android:layout_marginTop="25dp"
       android:gravity="center"
       android:text="@string/login"
-      android:textSize="25sp" /> <!-- Increased font size for better readability -->
+      android:textSize="20sp"
+      android:backgroundTint="@color/black"
+      android:textColor="@android:color/white" /> <!-- Adjust text color for better contrast -->
 
+  <!-- SignUp Button -->
   <Button
       android:id="@+id/SignUp"
-  android:layout_width="200dp"
-  android:layout_height="60dp"
-  android:layout_gravity="center"
-  android:layout_marginTop="5dp"
-  android:gravity="center"
-  android:text="@string/SignUp"
-  android:textSize="25sp" /> <!-- Increased font size for better readability -->
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:layout_marginTop="10dp"
+      android:gravity="center"
+      android:text="@string/SignUp"
+      android:textSize="20sp"
+      android:backgroundTint="@color/black"
+      android:textColor="@android:color/white"/> <!-- Adjust text color for better contrast -->
 
 </LinearLayout>

@@ -1,28 +1,167 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:gravity="center_horizontal">
 
+    <!-- Voltage -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="32dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="Voltage:" />
+
+        <TextView
+            android:id="@+id/voltageTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:paddingEnd="20dp"
+            android:textStyle="italic"
+            android:textAlignment="textEnd"
+            tools:text="-- V" />
+    </LinearLayout>
+
+    <!-- Current -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="Current:" />
+
+        <TextView
+            android:id="@+id/currentTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:paddingEnd="20dp"
+            android:textStyle="italic"
+            android:textAlignment="textEnd"
+            tools:text="-- A" />
+    </LinearLayout>
+
+    <!-- Power -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="Power  :" />
+
+        <TextView
+            android:id="@+id/powerTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:paddingEnd="20dp"
+            android:textAlignment="textEnd"
+            android:textStyle="italic"
+            tools:text="-- W" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="Maximun Value  :" />
+
+        <EditText
+            android:id="@+id/limit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:paddingEnd="20dp"
+            android:textAlignment="textEnd"
+            android:textStyle="italic"
+            android:inputType="number"
+            tools:text="1000" />
+    </LinearLayout>
+
+    <!-- Power Graph -->
     <TextView
-        android:id="@+id/voltageTextView"
+        android:id="@+id/timeDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Voltage: -- V"
-        android:textSize="18sp" />
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="00:00:000"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/currentTextView"
-        android:layout_width="wrap_content"
+        android:id="@+id/usage"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Current: -- A"
-        android:textSize="18sp" />
+        android:text="Total Power Usage : "
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#E91E63"
+        android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/powerTextView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Power: -- W"
-        android:textSize="18sp" />
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start" />
+
+        <Button
+            android:id="@+id/stopButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Stop" />
+
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Reset" />
+    </LinearLayout>
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/powerBarChart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="32dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Stopwatch -->
+
+    <!-- Start, Stop, Reset Buttons -->
+
 </LinearLayout>

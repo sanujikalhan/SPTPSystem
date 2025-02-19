@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Power Management System"
+        android:textSize="20sp"
+        android:layout_marginBottom="20dp"
+        android:textAlignment="center"/>
+
+    <CheckBox
+        android:id="@+id/electricityAccountCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Electricity Account"/>
+
+    <CheckBox
+        android:id="@+id/showOnMapCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show on map"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Complaint Type"
+        android:layout_marginTop="20dp"/>
+
+    <Spinner
+        android:id="@+id/complainTypeSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/contactNumberEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contact Number"
+        android:inputType="phone"/>
+
+    <EditText
+        android:id="@+id/complaintDetailsEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Anything tell more"
+        android:inputType="text"/>
+
+    <Button
+        android:id="@+id/submitComplaintButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit Complaint"
+        android:layout_marginTop="20dp" />
+</LinearLayout>
