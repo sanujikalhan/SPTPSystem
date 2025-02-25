@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/complaintTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Complaint" />
+
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date" />
+
+    <TextView
+        android:id="@+id/locationTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location" />
+
+    <TextView
+        android:id="@+id/technicianStatusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Technician Status" />
+
+    <TextView
+        android:id="@+id/userStatusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Status" />
+</LinearLayout>

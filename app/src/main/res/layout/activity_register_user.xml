@@ -57,6 +57,12 @@
         android:layout_height="wrap_content"
         android:hint="@string/mobile_number"
         android:minHeight="48dp" />
+    <EditText
+        android:id="@+id/regNo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Subscription No"
+        android:minHeight="48dp" />
 
     <!-- Spinner for User Role -->
     <TextView

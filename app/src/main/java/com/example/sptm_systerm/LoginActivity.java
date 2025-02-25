@@ -70,9 +70,18 @@ public class LoginActivity extends AppCompatActivity {
         firebaseService = new FirebaseService();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null  && ThingHomeSdk.getUserInstance().getUser() != null) {
-            redirectToHome();
+        if (currentUser != null && ThingHomeSdk.getUserInstance().getUser() != null) {
+            firebaseService.getUserRole(
+                    role -> {
+                        // Role successfully retrieved; you can use the role if needed
+                        redirectToHome();
+                    },
+                    e -> {
+                        Toast.makeText(this, "Failed to retrieve user role: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+            );
         }
+
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

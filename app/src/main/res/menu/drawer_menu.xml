@@ -63,6 +63,15 @@
         android:title="Logout"
         android:icon="@drawable/logout"
         android:orderInCategory="9" />
-
+    <item
+        android:id="@+id/nav_add_biill"
+        android:title="Add Bill"
+        android:icon="@drawable/bill"
+        android:orderInCategory="10" />
+    <item
+        android:id="@+id/nav_complaint"
+        android:title="Add Complaint"
+        android:icon="@drawable/bill"
+        android:orderInCategory="11" />
 </menu>
 

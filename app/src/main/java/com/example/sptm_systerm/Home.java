@@ -135,7 +135,14 @@ public class Home extends AppCompatActivity {
                     // Handle logout
                     Toast.makeText(Home.this, "Logged out", Toast.LENGTH_SHORT).show();
                 }
-
+                else if (id == R.id.nav_add_biill) {
+                    // Handle logout
+                    startActivity(new Intent(Home.this, AddBill.class));
+                }
+                else if (id == R.id.nav_complaint) {
+                    // Handle logout
+                    startActivity(new Intent(Home.this, ComplaintStatus.class));
+                }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }

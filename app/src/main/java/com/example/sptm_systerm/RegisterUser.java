@@ -42,6 +42,8 @@ public class RegisterUser extends AppCompatActivity {
     private String selectedRole = "User";
 
     private  String emails,passwords,firstname,lastnames,addresses,nics,mobiles ;
+    private String regNo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,7 @@ public class RegisterUser extends AppCompatActivity {
         EditText email = findViewById(R.id.Email);
         EditText password = findViewById(R.id.password);
         EditText nic= findViewById(R.id.NIC);
+        EditText reg= findViewById(R.id.regNo);
         EditText mobile= findViewById(R.id.MobileNumber);
         Button  register = findViewById(R.id.Register);
         spinnerUserRole = findViewById(R.id.spinnerUserRole);
@@ -76,6 +79,7 @@ public class RegisterUser extends AppCompatActivity {
                 addresses = address.getText().toString();
                 nics =nic.getText().toString();
                 mobiles = mobile.getText().toString();
+                regNo = reg.getText().toString();
                 selectedRole = spinnerUserRole.getSelectedItem().toString();
                 registerUser();
             }
@@ -93,7 +97,7 @@ public class RegisterUser extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            addUserToFirestore(user.getUid(), firstname,lastnames,addresses,nics,emails,mobiles, selectedRole);
+                            addUserToFirestore(user.getUid(), firstname,lastnames,addresses,nics,emails,mobiles,regNo, selectedRole);
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -108,7 +112,7 @@ public class RegisterUser extends AppCompatActivity {
 
     }
 
-    private void addUserToFirestore(String uid, String firstname,String lastnames,String addresses, String nics,String emails,String mobiles, String selectedRole) {
+    private void addUserToFirestore(String uid, String firstname,String lastnames,String addresses, String nics,String emails,String mobiles,String regNo, String selectedRole) {
 
 
         // Create a user data map
@@ -120,6 +124,7 @@ public class RegisterUser extends AppCompatActivity {
         userData.put("nic", nics);
         userData.put("mobile", mobiles);
         userData.put("role", selectedRole);
+        userData.put("subscriptionNo", regNo);
 
 
         // Add data to Firestore

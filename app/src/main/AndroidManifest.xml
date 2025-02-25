@@ -25,6 +25,18 @@
         tools:replace="android:allowBackup, android:supportsRtl"
         tools:targetApi="34">
         <activity
+            android:name=".AdminComplaintListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TechnicianComplaintListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserComplaintListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddBill"
+            android:exported="false" />
+        <activity
             android:name=".ComplaintStatus"
             android:exported="false" />
         <activity
@@ -73,7 +85,9 @@
         <activity
             android:name=".Home"
             android:exported="false" />
-
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
         <meta-data
             android:name="THING_SMART_APPKEY"
             android:value="hfeqthchgngnwp8stx8y" />
