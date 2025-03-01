@@ -93,26 +93,31 @@ public class AdminComplaintListActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
 
-            if (id == R.id.nav_home) {
-                startActivity(new Intent(AdminComplaintListActivity.this, MainActivity.class));
-            } else if (id == R.id.nav_view_bill) {
-                startActivity(new Intent(AdminComplaintListActivity.this, ElectricityBill.class));
+            if (id == R.id.nav_view_bill) {
+                startActivity(new Intent(AdminComplaintListActivity.this, AddBill.class));
             } else if (id == R.id.nav_lodge_complaint) {
-                startActivity(new Intent(AdminComplaintListActivity.this, LodgeComplaint.class));
-            } else if (id == R.id.nav_generate_bill) {
-                startActivity(new Intent(AdminComplaintListActivity.this, BillGeneration.class));
-            } else if (id == R.id.nav_user_loyalty_points) {
-                startActivity(new Intent(AdminComplaintListActivity.this, LoyaltyPoints.class));
+                startActivity(new Intent(AdminComplaintListActivity.this, ComplaintStatus.class));
+            }else if (id == R.id.nav_user_loyalty_points) {
+                if (!GlobalVariable.userRole.equals("User")) {
+                    startActivity(new Intent(AdminComplaintListActivity.this, LoyaltyConfigActivity.class));
+                } else {
+                    startActivity(new Intent(AdminComplaintListActivity.this, LoyalityPoints.class));
+                }
             } else if (id == R.id.nav_complaint_status) {
                 startActivity(new Intent(AdminComplaintListActivity.this, ComplaintStatus.class));
             } else if (id == R.id.nav_logout) {
                 Toast.makeText(AdminComplaintListActivity.this, "Logged out", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_add_biill) {
+                startActivity(new Intent(AdminComplaintListActivity.this, AddBill.class));
             } else if (id == R.id.nav_admin_complaint) {
                 startActivity(new Intent(AdminComplaintListActivity.this, AdminComplaintListActivity.class));
             } else if (id == R.id.nav_tech_complaint) {
                 startActivity(new Intent(AdminComplaintListActivity.this, TechnicianComplaintListActivity.class));
             } else if (id == R.id.nav_user_complaints_list) {
                 startActivity(new Intent(AdminComplaintListActivity.this, UserComplaintHistoryActivity.class));
+            }
+            else if (id == R.id.nav_payment) {
+                startActivity(new Intent(AdminComplaintListActivity.this, Payment.class));
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
@@ -123,23 +128,39 @@ public class AdminComplaintListActivity extends AppCompatActivity {
     private void hideMenuItemsForRoles() {
         Menu menu = navigationView.getMenu();
 
-        if (!GlobalVariable.userRole.equals("Reader")) {
-            menu.findItem(R.id.nav_generate_bill).setVisible(false);
-            menu.findItem(R.id.nav_add_biill).setVisible(false);
+        // Hide all menu items first
+        menu.findItem(R.id.nav_home).setVisible(false);
+        menu.findItem(R.id.nav_view_bill).setVisible(false);
+        menu.findItem(R.id.nav_lodge_complaint).setVisible(false);
+        menu.findItem(R.id.nav_user_complaints_list).setVisible(false);
+        menu.findItem(R.id.nav_user_loyalty_points).setVisible(false);
+        menu.findItem(R.id.nav_add_biill).setVisible(false);
+        menu.findItem(R.id.nav_admin_complaint).setVisible(false);
+        menu.findItem(R.id.nav_tech_complaint).setVisible(false);
+        menu.findItem(R.id.nav_complaint_status).setVisible(false);
+        menu.findItem(R.id.nav_profile).setVisible(false);
+        menu.findItem(R.id.nav_settings).setVisible(false);
+        menu.findItem(R.id.nav_payment).setVisible(false);
+
+        // Enable menu items based on user role
+        if (GlobalVariable.userRole.equals("User")) {
+            menu.findItem(R.id.nav_home).setVisible(true);
+            menu.findItem(R.id.nav_view_bill).setVisible(true);
+            menu.findItem(R.id.nav_lodge_complaint).setVisible(true);
+            menu.findItem(R.id.nav_user_complaints_list).setVisible(true);
+            menu.findItem(R.id.nav_user_loyalty_points).setVisible(true);
+        } else if (GlobalVariable.userRole.equals("Admin")) {
+            menu.findItem(R.id.nav_admin_complaint).setVisible(true);
+            menu.findItem(R.id.nav_user_loyalty_points).setVisible(true);
+        } else if (GlobalVariable.userRole.equals("Reader")) {
+            menu.findItem(R.id.nav_add_biill).setVisible(true);
+        } else if (GlobalVariable.userRole.equals("Technician")) {
+            menu.findItem(R.id.nav_tech_complaint).setVisible(true);
+            menu.findItem(R.id.nav_complaint_status).setVisible(true);
         }
 
-        if (!GlobalVariable.userRole.equals("User")) {
-            menu.findItem(R.id.nav_user_loyalty_points).setVisible(false);
-            menu.findItem(R.id.nav_user_complaints_list).setVisible(false);
-        }
-
-        if (!GlobalVariable.userRole.equals("Admin")) {
-            menu.findItem(R.id.nav_admin_complaint).setVisible(false);
-        }
-
-        if (!GlobalVariable.userRole.equals("Technician")) {
-            menu.findItem(R.id.nav_tech_complaint).setVisible(false);
-        }
+        // Always show Logout
+        menu.findItem(R.id.nav_logout).setVisible(true);
     }
 
     /** Function to Resize the Toggle Button Icon */
