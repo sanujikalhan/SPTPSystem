@@ -87,11 +87,15 @@ public class LoginActivity extends AppCompatActivity {
                         // Role successfully retrieved; you can use the role if needed
                         redirectToHome();
                         progressBar.setVisibility(GONE);
+                        progressDialog.dismiss();
                     },
                     e -> {
                         Toast.makeText(this, "Failed to retrieve user role: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
             );
+        }else {
+            progressBar.setVisibility(GONE);
+            progressDialog.dismiss();
         }
 
 

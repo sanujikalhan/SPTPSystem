@@ -23,6 +23,7 @@
             android:layout_gravity="center_horizontal"
             android:paddingBottom="10dp"/>
 
+        <!-- First Name -->
         <EditText
             android:id="@+id/Name"
             android:layout_width="match_parent"
@@ -33,6 +34,7 @@
             android:background="@drawable/edittext_bg"
             android:padding="12dp"/>
 
+        <!-- Last Name -->
         <EditText
             android:id="@+id/lastName"
             android:layout_width="match_parent"
@@ -43,6 +45,7 @@
             android:background="@drawable/edittext_bg"
             android:padding="12dp"/>
 
+        <!-- Address -->
         <EditText
             android:id="@+id/Address"
             android:layout_width="match_parent"
@@ -53,6 +56,18 @@
             android:background="@drawable/edittext_bg"
             android:padding="12dp"/>
 
+        <!-- Location -->
+        <EditText
+            android:id="@+id/Location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#434040"
+            android:hint="Location"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"/>
+
+        <!-- Email -->
         <EditText
             android:id="@+id/Email"
             android:layout_width="match_parent"
@@ -63,6 +78,7 @@
             android:background="@drawable/edittext_bg"
             android:padding="12dp"/>
 
+        <!-- Password -->
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
@@ -74,6 +90,7 @@
             android:inputType="textPassword"
             android:padding="12dp"/>
 
+        <!-- NIC -->
         <EditText
             android:id="@+id/NIC"
             android:layout_width="match_parent"
@@ -84,6 +101,7 @@
             android:background="@drawable/edittext_bg"
             android:padding="12dp"/>
 
+        <!-- Mobile Number -->
         <EditText
             android:id="@+id/MobileNumber"
             android:layout_width="match_parent"
@@ -94,6 +112,7 @@
             android:background="@drawable/edittext_bg"
             android:padding="12dp"/>
 
+        <!-- Subscription No -->
         <EditText
             android:id="@+id/regNo"
             android:layout_width="match_parent"
@@ -104,6 +123,7 @@
             android:background="@drawable/edittext_bg"
             android:padding="12dp"/>
 
+        <!-- Select User Role -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -117,13 +137,59 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:padding="12dp"
-            android:textColorHint="#434040"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/white"
             android:background="@drawable/spinner_background"
-            android:popupBackground="@color/black"
+            android:popupBackground="@color/white"
             android:dropDownVerticalOffset="8dp"
             android:dropDownHorizontalOffset="8dp"
             android:dropDownWidth="match_parent"/>
 
+        <!-- Verification Code -->
+        <EditText
+            android:id="@+id/myVerification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#434040"
+            android:hint="Enter Verification Code"
+            android:background="@drawable/edittext_bg"
+            android:inputType="number"
+            android:padding="12dp"/>
+
+        <!-- Send Verification Button -->
+        <Button
+            android:id="@+id/Submit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Send Verification Code"
+            android:textSize="18sp"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"/>
+
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:max="100"
+            android:progress="0"
+            android:indeterminate="false" />
+
+        <!-- Verify Button -->
+        <Button
+            android:id="@+id/verify"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Verify &amp; Register"
+            android:textSize="18sp"
+            android:backgroundTint="@color/green"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"/>
 
         <CheckBox
             android:id="@+id/checkBox"
@@ -132,16 +198,6 @@
             android:text="I understand the terms &amp; policy."
             android:textColor="@color/black"
             android:layout_marginTop="10dp"/>
-
-        <Button
-            android:id="@+id/Register"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="SIGN UP"
-            android:textSize="18sp"
-            android:backgroundTint="@color/green"
-            android:textColor="@color/white"
-            android:layout_marginTop="20dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -183,5 +239,6 @@
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"/>
+
     </LinearLayout>
 </ScrollView>

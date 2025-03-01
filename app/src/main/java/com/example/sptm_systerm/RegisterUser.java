@@ -1,7 +1,6 @@
 package com.example.sptm_systerm;
 
 import static android.content.ContentValues.TAG;
-import static android.view.View.GONE;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,22 +14,19 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.thingclips.smart.android.user.api.IRegisterCallback;
+import com.thingclips.smart.android.user.bean.User;
+import com.thingclips.smart.home.sdk.ThingHomeSdk;
 
-import java.sql.Date;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -42,90 +38,109 @@ public class RegisterUser extends AppCompatActivity {
     private Spinner spinnerUserRole;
     private String selectedRole = "User";
 
-    private  String emails,passwords,firstname,lastnames,addresses,nics,mobiles ;
+    private String emails, passwords, firstname, lastnames, addresses, nics, mobiles;
     private String regNo;
     private CustomProgressDialog progressDialog;
+    private Button registerBtn;
+    private EditText emailField, passwordField, verificationCodeField;
+    private Button sendVerificationBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register_user);
+
         EditText Name = findViewById(R.id.Name);
         EditText lastname = findViewById(R.id.lastName);
         EditText address = findViewById(R.id.Address);
-        EditText email = findViewById(R.id.Email);
-        EditText password = findViewById(R.id.password);
-        EditText nic= findViewById(R.id.NIC);
-        EditText reg= findViewById(R.id.regNo);
-        EditText mobile= findViewById(R.id.MobileNumber);
-        Button  register = findViewById(R.id.Register);
+        emailField = findViewById(R.id.Email);
+        passwordField = findViewById(R.id.password);
+        EditText nic = findViewById(R.id.NIC);
+        EditText reg = findViewById(R.id.regNo);
+        EditText mobile = findViewById(R.id.MobileNumber);
+        registerBtn = findViewById(R.id.verify);
         spinnerUserRole = findViewById(R.id.spinnerUserRole);
+        sendVerificationBtn = findViewById(R.id.Submit);
+        verificationCodeField = findViewById(R.id.myVerification);
+
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         progressDialog = new CustomProgressDialog(this);
 
-        List<String> roles = Arrays.asList("Admin", "User", "Manager");
-
-        // Populate Spinner with user roles
+        List<String> roles = Arrays.asList("Admin", "User", "Technician", "Reader");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, roles);
         spinnerUserRole.setAdapter(adapter);
 
-
-        register.setOnClickListener(new View.OnClickListener() {
+        sendVerificationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Show Progress Dialog
+                sendTuyaVerificationCode(emailField.getText().toString());
+            }
+        });
+
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 progressDialog.show();
-                emails = email.getText().toString();
-                passwords = password.getText().toString();
+                emails = emailField.getText().toString();
+                passwords = passwordField.getText().toString();
                 firstname = Name.getText().toString();
                 lastnames = lastname.getText().toString();
                 addresses = address.getText().toString();
-                nics =nic.getText().toString();
+                nics = nic.getText().toString();
                 mobiles = mobile.getText().toString();
                 regNo = reg.getText().toString();
                 selectedRole = spinnerUserRole.getSelectedItem().toString();
                 registerUser();
             }
         });
-
     }
 
-
-    public void registerUser(){
+    private void registerUser() {
         mAuth.createUserWithEmailAndPassword(emails, passwords)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            addUserToFirestore(user.getUid(), firstname,lastnames,addresses,nics,emails,mobiles,regNo, selectedRole);
-
+                            registerWithTuya(emails, passwords);
                         } else {
-                            // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegisterUser.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(RegisterUser.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
                         }
-                        progressDialog.dismiss();
                     }
-
                 });
-
-
     }
 
-    private void addUserToFirestore(String uid, String firstname,String lastnames,String addresses, String nics,String emails,String mobiles,String regNo, String selectedRole) {
+    private void registerWithTuya(String email, String password) {
+        String verificationCode = verificationCodeField.getText().toString();
 
+        ThingHomeSdk.getUserInstance().registerAccountWithEmail("86", email, password, verificationCode, new IRegisterCallback() {
+            @Override
+            public void onSuccess(User user) {
+                Log.d("TuyaRegistration", "User registered successfully with Tuya.");
+                FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    addUserToFirestore(firebaseUser.getUid(), firstname, lastnames, addresses, nics, emails, mobiles, regNo, selectedRole);
+                }
+            }
 
-        // Create a user data map
+            @Override
+            public void onError(@Nullable String errorCode, @Nullable String errorMessage) {
+                progressDialog.dismiss();
+                Log.e("TuyaRegistrationError", "Error code: " + errorCode + ", message: " + errorMessage);
+                Toast.makeText(RegisterUser.this, "Tuya Registration Failed: " + errorMessage, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void addUserToFirestore(String uid, String firstname, String lastnames, String addresses, String nics, String emails, String mobiles, String regNo, String selectedRole) {
         Map<String, Object> userData = new HashMap<>();
         userData.put("firstname", firstname);
-        userData.put("lastname",lastnames);
+        userData.put("lastname", lastnames);
         userData.put("email", emails);
         userData.put("addresses", addresses);
         userData.put("nic", nics);
@@ -133,23 +148,34 @@ public class RegisterUser extends AppCompatActivity {
         userData.put("role", selectedRole);
         userData.put("subscriptionNo", regNo);
 
-
-        // Add data to Firestore
         db.collection("users").document(uid).set(userData)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("RegisterActivity", "User added to Firestore.");
-                        Intent emailPass = new Intent(RegisterUser.this,SignUp.class);
-                        emailPass.putExtra("emailAddress",emails);
-                        emailPass.putExtra("password",passwords);
-                        startActivity(emailPass);
-                    }
+                .addOnSuccessListener(aVoid -> {
+                    Log.d("RegisterActivity", "User added to Firestore.");
+                    Intent emailPass = new Intent(RegisterUser.this, LoginActivity.class);
+                    startActivity(emailPass);
+                    progressDialog.dismiss();
                 })
-                .addOnFailureListener(new OnFailureListener() {
+                .addOnFailureListener(e -> Log.w("RegisterActivity", "Error adding user to Firestore: ", e));
+    }
+
+    private void sendTuyaVerificationCode(String email) {
+        progressDialog.show();
+        ThingHomeSdk.getUserInstance().sendVerifyCodeWithUserName(
+                email, "", "86", 1, new com.thingclips.smart.sdk.api.IResultCallback() {
                     @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("RegisterActivity", "Error adding user to Firestore: ", e);
+                    public void onError(String code, String error) {
+                        Log.e("TuyaVerificationError", "Error code: " + code + ", message: " + error);
+                        Toast.makeText(RegisterUser.this, "Verification Code Failed: " + error, Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        Log.d("TuyaVerification", "Verification code sent successfully.");
+                        verificationCodeField.setVisibility(View.VISIBLE);
+                        registerBtn.setVisibility(View.VISIBLE);
+                        sendVerificationBtn.setVisibility(View.INVISIBLE);
+                        progressDialog.dismiss();
                     }
                 });
     }
