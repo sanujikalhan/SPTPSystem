@@ -1,125 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_gray">
+    android:background="@color/light_gray"
+    android:fillViewport="true">
 
-  <!-- Background Image with Overlay -->
-  <ImageView
-      android:id="@+id/backgroundImage"
-      android:layout_width="match_parent"
-      android:layout_height="400dp"
-      android:scaleType="centerCrop"
-      android:src="@drawable/pm"
-      android:background="@drawable/gradient_overlay"/>
-
-  <!-- Login Card -->
-  <LinearLayout
-      android:id="@+id/loginCard"
+  <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="400dp"
-      android:layout_centerHorizontal="true"
-      android:orientation="vertical"
-      android:padding="24dp"
-      android:background="@drawable/card_bg"
-      android:elevation="4dp">
+      android:background="@color/light_gray">
 
-    <!-- Title -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
+    <!-- Background Image with Overlay -->
+    <ImageView
+        android:id="@+id/backgroundImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="400dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/pm"
+        android:background="@drawable/gradient_overlay"/>
 
+    <!-- Login Card -->
+    <LinearLayout
+        android:id="@+id/loginCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="400dp"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="@drawable/card_bg"
+        android:elevation="4dp">
+
+      <!-- Progress Bar -->
+      <ProgressBar
+          android:id="@+id/progressBar"
+          style="?android:attr/progressBarStyle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
+
+      <!-- Title -->
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Welcome"
+          android:textSize="22sp"
+          android:textStyle="bold"
+          android:textColor="@color/black"
+          android:layout_gravity="center_horizontal"
+          android:paddingBottom="5dp"/>
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Login to your account"
+          android:textSize="14sp"
+          android:textColor="#575757"
+          android:layout_gravity="center_horizontal"
+          android:paddingBottom="15dp"/>
+
+      <!-- Email Input -->
+      <EditText
+          android:id="@+id/userName"
+          style="@style/EditTextStyle"
+          android:layout_marginBottom="10dp"
+          android:hint="Email"
+          android:inputType="textEmailAddress"/>
+
+      <!-- Password Input -->
+      <EditText
+          android:id="@+id/password"
+          style="@style/EditTextStyle"
+          android:hint="Password"
+          android:inputType="textPassword"/>
+
+      <!-- Forgot Password -->
+      <TextView
+          android:id="@+id/forgotPassword"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Forgot?"
+          android:textColor="@color/green"
+          android:textStyle="bold"
+          android:layout_gravity="end"
+          android:layout_marginTop="5dp"/>
+
+      <!-- Login Button -->
+      <Button
+          android:id="@+id/Login"
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:text="Sign In"
+          android:textSize="18sp"
+          android:layout_marginTop="15dp"
+          android:background="@drawable/button_bg_outline"
+          android:textColor="@color/white"/>
+
+      <!-- Or separator -->
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="or"
+          android:textColor="#575757"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginTop="10dp"/>
+
+      <!-- Google Sign In Button -->
+      <Button
+          android:id="@+id/googleSignIn"
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:layout_marginTop="10dp"
+          android:background="@drawable/button_bg_outline"
+          android:text="Sign in with Google"
+          android:textColor="@color/white"
+          android:textSize="16sp"
+          android:visibility="gone" />
+
+    </LinearLayout>
+
+    <!-- Sign Up Suggestion -->
     <TextView
+        android:id="@+id/SignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="5dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login to your account"
-        android:textSize="14sp"
+        android:text="Create account? "
         android:textColor="#575757"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="15dp"/>
+        android:layout_below="@id/loginCard"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
 
-    <!-- Email Input -->
-    <EditText
-        android:id="@+id/userName"
-        style="@style/EditTextStyle"
-        android:layout_marginBottom="10dp"
-        android:hint="Email"
-        android:inputType="textEmailAddress"/>
-
-    <!-- Password Input -->
-    <EditText
-        android:id="@+id/password"
-        style="@style/EditTextStyle"
-        android:hint="Password"
-        android:inputType="textPassword"/>
-
-    <!-- Forgot Password -->
-    <TextView
-        android:id="@+id/forgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Forgot?"
-        android:textColor="@color/green"
-        android:textStyle="bold"
-        android:layout_gravity="end"
-        android:layout_marginTop="5dp"/>
-
-    <!-- Login Button -->
-    <Button
-        android:id="@+id/Login"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Sign In"
-        android:textSize="18sp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/button_bg_outline"
-        android:textColor="@color/white"/>
-
-    <!-- Or separator -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="or"
-        android:textColor="#575757"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"/>
-
-    <!-- Google Sign In Button -->
-    <Button
-        android:id="@+id/googleSignIn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Sign in with Google"
-        android:textSize="16sp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/button_bg_outline"
-        android:textColor="@color/white"/>
-
-  </LinearLayout>
-
-  <!-- Sign Up Suggestion -->
-  <TextView
-      android:id="@+id/SignUp"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Create account? "
-      android:textColor="#575757"
-      android:layout_below="@id/loginCard"
-      android:layout_centerHorizontal="true"
-      android:layout_marginTop="20dp"/>
-
-
-</RelativeLayout>
+  </RelativeLayout>
+</ScrollView>
