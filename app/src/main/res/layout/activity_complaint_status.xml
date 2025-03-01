@@ -1,44 +1,58 @@
-<LinearLayout
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:fillViewport="true">
 
-    <EditText
-        android:id="@+id/subscriptionNumber"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Subscription Number" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <DatePicker
-        android:layout_gravity="center"
-        android:id="@+id/datePickerText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:calendarViewShown="true" />
+        <!-- Subscription Number Input -->
+        <EditText
+            android:id="@+id/subscriptionNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Subscription Number" />
 
-    <Button
-        android:id="@+id/openMapButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Location" />
+        <!-- Date Picker -->
+        <DatePicker
+            android:layout_gravity="center"
+            android:id="@+id/datePickerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:calendarViewShown="true" />
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView3"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        <!-- Select Location Button -->
+        <Button
+            android:id="@+id/openMapButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Location" />
 
-    <EditText
-        android:id="@+id/complaintText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter complaint details" />
+        <!-- Map View -->
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView3"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
 
-    <Button
-        android:id="@+id/submitComplaintBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Submit Complaint" />
+        <!-- Complaint Details Input -->
+        <EditText
+            android:id="@+id/complaintText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter complaint details" />
 
-</LinearLayout>
+        <!-- Submit Complaint Button -->
+        <Button
+            android:id="@+id/submitComplaintBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit Complaint" />
+
+    </LinearLayout>
+
+</ScrollView>
