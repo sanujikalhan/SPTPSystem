@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Power Management System"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="20dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Monthly Loyalty Target:" />
+
+    <EditText
+        android:id="@+id/editLoyaltyTarget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Enter target" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Issue loyalty points if achieve target of 1%:" />
+
+    <EditText
+        android:id="@+id/editOnePercent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Enter 1% threshold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Issue loyalty points if achieve target of 5%:" />
+
+    <EditText
+        android:id="@+id/editFivePercent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Enter 5% threshold" />
+
+    <Button
+        android:id="@+id/btnSaveLoyalty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Save Settings" />
+
+    <Button
+        android:id="@+id/btnCalculateLoyalty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Calculate Loyalty Points" />
+
+    <TextView
+        android:id="@+id/txtLoyaltyResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingTop="10dp"/>
+</LinearLayout>

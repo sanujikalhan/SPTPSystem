@@ -1,6 +1,7 @@
 package com.example.sptm_systerm;
 
 import static android.content.ContentValues.TAG;
+import static android.view.View.GONE;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ public class RegisterUser extends AppCompatActivity {
 
     private  String emails,passwords,firstname,lastnames,addresses,nics,mobiles ;
     private String regNo;
+    private CustomProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class RegisterUser extends AppCompatActivity {
         spinnerUserRole = findViewById(R.id.spinnerUserRole);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        progressDialog = new CustomProgressDialog(this);
 
         List<String> roles = Arrays.asList("Admin", "User", "Manager");
 
@@ -72,6 +75,8 @@ public class RegisterUser extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Show Progress Dialog
+                progressDialog.show();
                 emails = email.getText().toString();
                 passwords = password.getText().toString();
                 firstname = Name.getText().toString();
@@ -106,7 +111,9 @@ public class RegisterUser extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
 
                         }
+                        progressDialog.dismiss();
                     }
+
                 });
 
 

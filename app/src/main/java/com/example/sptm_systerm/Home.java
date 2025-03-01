@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -144,39 +145,30 @@ public class Home extends AppCompatActivity {
                 int id = item.getItemId();
 
                 if (id == R.id.nav_view_bill) {
-                    // Open View Electricity Bill Activity
-                    startActivity(new Intent(Home.this, ElectricityBill.class));
+                    startActivity(new Intent(Home.this, AddBill.class));
                 } else if (id == R.id.nav_lodge_complaint) {
-                    // Open Lodge Complaint Activity
-                    startActivity(new Intent(Home.this, LodgeComplaint.class));
-                } else if (id == R.id.nav_generate_bill) {
-                    // Open Bill Generation Activity
-                    startActivity(new Intent(Home.this, BillGeneration.class));
-                } else if (id == R.id.nav_user_loyalty_points) {
-                    // Open User Loyalty Points Activity
-                    startActivity(new Intent(Home.this, LoyaltyPoints.class));
+                    startActivity(new Intent(Home.this, ComplaintStatus.class));
+                }else if (id == R.id.nav_user_loyalty_points) {
+                    if (!GlobalVariable.userRole.equals("User")) {
+                        startActivity(new Intent(Home.this, LoyaltyConfigActivity.class));
+                    } else {
+                        startActivity(new Intent(Home.this, LoyalityPoints.class));
+                    }
                 } else if (id == R.id.nav_complaint_status) {
-                    // Open Complaint Status Activity
                     startActivity(new Intent(Home.this, ComplaintStatus.class));
                 } else if (id == R.id.nav_logout) {
-                    // Handle logout
                     Toast.makeText(Home.this, "Logged out", Toast.LENGTH_SHORT).show();
-                }
-                else if (id == R.id.nav_add_biill) {
-                    // Handle logout
+                } else if (id == R.id.nav_add_biill) {
                     startActivity(new Intent(Home.this, AddBill.class));
-                }
-                else if (id == R.id.nav_complaint) {
-                    // Handle logout
-                    startActivity(new Intent(Home.this, ComplaintStatus.class));
-                }
-                else if (id == R.id.nav_admin_complaint) {
-                    // Handle logout
+                } else if (id == R.id.nav_admin_complaint) {
                     startActivity(new Intent(Home.this, AdminComplaintListActivity.class));
-                }
-                else if (id == R.id.nav_tech_complaint) {
-                    // Handle logout
+                } else if (id == R.id.nav_tech_complaint) {
                     startActivity(new Intent(Home.this, TechnicianComplaintListActivity.class));
+                } else if (id == R.id.nav_user_complaints_list) {
+                    startActivity(new Intent(Home.this, UserComplaintHistoryActivity.class));
+                }
+                else if (id == R.id.nav_payment) {
+                    startActivity(new Intent(Home.this, Payment.class));
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
@@ -254,7 +246,45 @@ public class Home extends AppCompatActivity {
                 startActivity(linear);
             }
         });
+        hideMenuItemsForRoles();
+    }
+    /** Hide navigation menu items dynamically based on user role */
+    private void hideMenuItemsForRoles() {
+        Menu menu = navigationView.getMenu();
 
+        // Hide all menu items first
+        menu.findItem(R.id.nav_home).setVisible(false);
+        menu.findItem(R.id.nav_view_bill).setVisible(false);
+        menu.findItem(R.id.nav_lodge_complaint).setVisible(false);
+        menu.findItem(R.id.nav_user_complaints_list).setVisible(false);
+        menu.findItem(R.id.nav_user_loyalty_points).setVisible(false);
+        menu.findItem(R.id.nav_add_biill).setVisible(false);
+        menu.findItem(R.id.nav_admin_complaint).setVisible(false);
+        menu.findItem(R.id.nav_tech_complaint).setVisible(false);
+        menu.findItem(R.id.nav_complaint_status).setVisible(false);
+        menu.findItem(R.id.nav_profile).setVisible(false);
+        menu.findItem(R.id.nav_settings).setVisible(false);
+        menu.findItem(R.id.nav_payment).setVisible(false);
+
+        // Enable menu items based on user role
+        if (GlobalVariable.userRole.equals("User")) {
+            menu.findItem(R.id.nav_home).setVisible(true);
+            menu.findItem(R.id.nav_view_bill).setVisible(true);
+            menu.findItem(R.id.nav_lodge_complaint).setVisible(true);
+            menu.findItem(R.id.nav_user_complaints_list).setVisible(true);
+            menu.findItem(R.id.nav_user_loyalty_points).setVisible(true);
+        } else if (GlobalVariable.userRole.equals("Admin")) {
+            menu.findItem(R.id.nav_admin_complaint).setVisible(true);
+            menu.findItem(R.id.nav_user_loyalty_points).setVisible(true);
+        } else if (GlobalVariable.userRole.equals("Reader")) {
+            menu.findItem(R.id.nav_add_biill).setVisible(true);
+        } else if (GlobalVariable.userRole.equals("Technician")) {
+            menu.findItem(R.id.nav_tech_complaint).setVisible(true);
+            menu.findItem(R.id.nav_complaint_status).setVisible(true);
+        }
+
+        // Always show Logout
+        menu.findItem(R.id.nav_logout).setVisible(true);
     }
 
     private Drawable resizeDrawable(Drawable image, int width, int height) {

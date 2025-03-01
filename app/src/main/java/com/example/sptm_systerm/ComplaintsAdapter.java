@@ -1,6 +1,7 @@
 package com.example.sptm_systerm;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,15 @@ public class ComplaintsAdapter extends RecyclerView.Adapter<ComplaintsAdapter.Vi
     public void onBindViewHolder(@NonNull ComplaintsAdapter.ViewHolder holder, int position) {
         Complaint complaint = complaintList.get(position);
         holder.bind(complaint);
+        // Apply gradient background based on status
+        if ("Done".equalsIgnoreCase(complaint.getTechnicianStatus())) {
+            holder.itemView.setBackgroundResource(R.drawable.gradient_background); // Green Gradient
+        } else if ("Pending".equalsIgnoreCase(complaint.getTechnicianStatus())) {
+            holder.itemView.setBackgroundResource(R.drawable.gradient_orange); // Orange Gradient
+        }
+        else {
+            holder.itemView.setBackgroundResource(R.drawable.default_background); // Default
+        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -52,6 +62,27 @@ public class ComplaintsAdapter extends RecyclerView.Adapter<ComplaintsAdapter.Vi
             locationTextView = itemView.findViewById(R.id.locationTextView);
             technicianStatusTextView = itemView.findViewById(R.id.technicianStatusTextView);
             userStatusTextView = itemView.findViewById(R.id.userStatusTextView);
+
+            // Set Click Listener on each item
+            itemView.setOnClickListener(v -> {
+                if(!GlobalVariable.userRole.equals("Reader"))
+                    return;
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    Complaint selectedComplaint = complaintList.get(position);
+
+                    // Create Intent to pass data to StatusUpdateActivity
+                    Intent intent = new Intent(context, StatusUpdateActivity.class);
+
+                    // If using Serializable
+                    intent.putExtra("complaint", selectedComplaint); // 🔹 Pass object
+
+                    // If using Parcelable
+                    // intent.putExtra("complaint", selectedComplaint);
+
+                    context.startActivity(intent);
+                }
+            });
         }
 
         void bind(Complaint complaint) {

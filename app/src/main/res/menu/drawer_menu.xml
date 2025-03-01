@@ -1,87 +1,106 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Home Menu Item -->
-    <item
-        android:id="@+id/nav_home"
-        android:title="Home"
-        android:icon="@drawable/home"
-        android:orderInCategory="1" />
+    <!-- Home Section -->
+    <group android:id="@+id/group_home">
+        <item
+            android:id="@+id/nav_home"
+            android:title="Home"
+            android:icon="@drawable/home"
+            android:orderInCategory="1" />
+    </group>
 
-    <!-- View Electricity Bill Menu Item -->
-    <item
-        android:id="@+id/nav_view_bill"
-        android:title="View Electricity Bill"
-        android:icon="@drawable/bill"
-        android:orderInCategory="2" />
+    <!-- Billing Section -->
+    <group android:id="@+id/group_billing">
+        <item
+            android:id="@+id/nav_view_bill"
+            android:title="View Electricity Bill"
+            android:icon="@drawable/bill"
+            android:orderInCategory="2" />
 
-    <!-- Lodge Complaint Menu Item -->
-    <item
-        android:id="@+id/nav_lodge_complaint"
-        android:title="Lodge Complaint"
-        android:icon="@drawable/satisfaction_scale"
-        android:orderInCategory="3" />
+        <item
+            android:visible="false"
+            android:id="@+id/nav_generate_bill"
+            android:title="Generate Bill"
+            android:icon="@drawable/bill"
+            android:orderInCategory="3" />
 
-    <!-- Generate Bill Menu Item -->
-    <item
-        android:id="@+id/nav_generate_bill"
-        android:title="Generate Bill"
-        android:icon="@drawable/bill_gen"
-        android:orderInCategory="4" />
+        <item
+            android:id="@+id/nav_add_biill"
+            android:title="Add Bill"
+            android:icon="@drawable/bill"
+            android:orderInCategory="4" />
+    </group>
 
-    <!-- User Loyalty Points Menu Item -->
-    <item
-        android:id="@+id/nav_user_loyalty_points"
-        android:title="User Loyalty Points"
-        android:icon="@drawable/point"
-        android:orderInCategory="5" />
+    <!-- Complaints Section -->
+    <group android:id="@+id/group_complaints">
+        <item
+            android:id="@+id/nav_lodge_complaint"
+            android:title="Lodge Complaint"
+            android:icon="@drawable/status_update"
+            android:orderInCategory="5" />
 
-    <!-- Complaint Status Menu Item -->
-    <item
-        android:id="@+id/nav_complaint_status"
-        android:title="Complaint Status"
-        android:icon="@drawable/status_update"
-        android:orderInCategory="6" />
+        <item
+            android:id="@+id/nav_complaint_status"
+            android:title="Complaint Status"
+            android:icon="@drawable/status_update"
+            android:orderInCategory="6" />
 
-    <!-- Profile Menu Item -->
-    <item
-        android:id="@+id/nav_profile"
-        android:title="Profile"
-        android:icon="@drawable/user"
-        android:orderInCategory="7" />
+        <item
+            android:id="@+id/nav_user_complaints_list"
+            android:title="View Complaints"
+            android:icon="@drawable/status_update"
+            android:orderInCategory="7" />
 
-    <!-- Settings Menu Item -->
-    <item
-        android:id="@+id/nav_settings"
-        android:title="Settings"
-        android:icon="@drawable/settings"
-        android:orderInCategory="8" />
+        <item
+            android:id="@+id/nav_admin_complaint"
+            android:title="Admin Complaints"
+            android:icon="@drawable/status_update"
+            android:orderInCategory="8" />
 
-    <!-- Logout Menu Item -->
-    <item
-        android:id="@+id/nav_logout"
-        android:title="Logout"
-        android:icon="@drawable/logout"
-        android:orderInCategory="9" />
-    <item
-        android:id="@+id/nav_add_biill"
-        android:title="Add Bill"
-        android:icon="@drawable/bill"
-        android:orderInCategory="10" />
-    <item
-        android:id="@+id/nav_tech_complaint"
-        android:title="Add T Complaint"
-        android:icon="@drawable/bill"
-        android:orderInCategory="11" />
-    <item
-        android:id="@+id/nav_admin_complaint"
-        android:title="Add admin Complaint"
-        android:icon="@drawable/bill"
-        android:orderInCategory="12" />
-    <item
-        android:id="@+id/nav_complaint"
-        android:title="Add Complaint"
-        android:icon="@drawable/bill"
-        android:orderInCategory="13" />
+        <item
+            android:id="@+id/nav_tech_complaint"
+            android:title="Technical Complaints"
+            android:icon="@drawable/status_update"
+            android:orderInCategory="9" />
+    </group>
+
+    <!-- Loyalty Section -->
+    <group android:id="@+id/group_loyalty">
+        <item
+            android:id="@+id/nav_user_loyalty_points"
+            android:title="Loyalty Points"
+            android:icon="@drawable/point"
+            android:orderInCategory="10" />
+    </group>
+
+    <!-- Profile & Settings -->
+    <group android:id="@+id/group_user">
+        <item
+            android:id="@+id/nav_profile"
+            android:title="Profile"
+            android:icon="@drawable/user"
+            android:orderInCategory="11" />
+
+        <item
+            android:id="@+id/nav_settings"
+            android:title="Settings"
+            android:icon="@drawable/settings"
+            android:orderInCategory="12" />
+        <item
+            android:id="@+id/nav_payment"
+            android:title="Payment"
+            android:icon="@drawable/settings"
+            android:orderInCategory="13" />
+    </group>
+
+    <!-- Logout -->
+    <group android:id="@+id/group_logout">
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Logout"
+            android:icon="@drawable/logout"
+            android:orderInCategory="14" />
+    </group>
+
 </menu>
-

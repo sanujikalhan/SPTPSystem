@@ -1,6 +1,8 @@
 package com.example.sptm_systerm;
 
-public class Complaint {
+import java.io.Serializable;
+
+public class Complaint implements Serializable {
     private String docId;             // Firestore doc ID (optional)
     private String subscriptionNo;    // e.g., "SA001"
     private String complaint;         // e.g., "AC not working"

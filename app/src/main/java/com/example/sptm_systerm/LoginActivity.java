@@ -58,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginStorage loginStorage;
     private FirebaseAuth mAuth;
     private FirebaseService firebaseService;
+    private CustomProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +73,11 @@ public class LoginActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         firebaseService = new FirebaseService();
         progressBar.setVisibility(GONE);
+        progressDialog = new CustomProgressDialog(this);
+
+        // Show Progress Dialog
+        progressDialog.show();
+
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null && ThingHomeSdk.getUserInstance().getUser() != null) {
@@ -118,9 +124,26 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void redirectToHome() {
-        Intent intent = new Intent(LoginActivity.this, Home.class);
-        startActivity(intent);
-        finish(); // Prevents user from returning to LoginActivity
+        if(GlobalVariable.userRole.equals("User")) {
+            Intent intent = new Intent(LoginActivity.this, Home.class);
+            startActivity(intent);
+            finish(); // Prevents user
+        } else if (GlobalVariable.userRole.equals("Admin")) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish(); // Prevents user
+        }
+        else if (GlobalVariable.userRole.equals("Technician") ) {
+            Intent intent = new Intent(LoginActivity.this, AdminComplaintListActivity.class);
+            startActivity(intent);
+            finish(); // Prevents user
+        }
+        else if (GlobalVariable.userRole.equals("Reader") ) {
+            Intent intent = new Intent(LoginActivity.this, AddBill.class);
+            startActivity(intent);
+            finish(); // Prevents user
+        }
+        progressDialog.dismiss();
     }
 
 

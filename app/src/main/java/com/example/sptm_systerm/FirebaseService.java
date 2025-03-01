@@ -124,6 +124,22 @@ public class FirebaseService {
                 })
                 .addOnFailureListener(failureListener);
     }
+    public void getAllUsers(OnSuccessListener<List<User>> successListener, OnFailureListener failureListener) {
+        db.collection("users")
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    List<User> userList = new ArrayList<>();
+                    for (DocumentSnapshot doc : querySnapshot) {
+                        String userId = doc.getId();
+                        String name = doc.getString("firstname") + " " + doc.getString("lastname");
+                        String role = doc.getString("role");
+                        userList.add(new User(userId, name, role));
+                    }
+                    successListener.onSuccess(userList);
+                })
+                .addOnFailureListener(failureListener);
+    }
+
     public void addComplaint(Complaint complaint,
                              OnSuccessListener<DocumentReference> successListener,
                              OnFailureListener failureListener) {
@@ -133,26 +149,44 @@ public class FirebaseService {
                 .addOnFailureListener(failureListener);
     }
 
+    public void updateComplaintStatus(String complaintId, String newTechnicianStatus, String newUserStatus,
+                                      OnSuccessListener<Void> successListener,
+                                      OnFailureListener failureListener) {
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("technicianStatus", newTechnicianStatus);
+        updates.put("userStatus", newUserStatus);
+
+        db.collection("complaints").document(complaintId)
+                .update(updates)
+                .addOnSuccessListener(successListener)
+                .addOnFailureListener(failureListener);
+    }
+
     public void getComplaintsForUser(String subscriptionNo,
                                      OnSuccessListener<List<Complaint>> successListener,
                                      OnFailureListener failureListener) {
         db.collection("complaints")
-                .whereEqualTo("subscriptionNo", subscriptionNo) // <-- Filter by user field
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     List<Complaint> complaintList = new ArrayList<>();
                     for (DocumentSnapshot doc : querySnapshot) {
-                        Complaint complaint = doc.toObject(Complaint.class);
-                        if (complaint != null) {
-                            // Store the document ID if needed
-                            complaint.setDocId(doc.getId());
-                            complaintList.add(complaint);
+                        if (doc.exists()) {
+                            // Retrieve subscriptionNo from inside the document
+                            String storedSubscriptionNo = doc.getString("subscriptionNo");
+                            if (storedSubscriptionNo != null && storedSubscriptionNo.equals(subscriptionNo)) {
+                                Complaint complaint = doc.toObject(Complaint.class);
+                                if (complaint != null) {
+                                    complaint.setDocId(doc.getId()); // Store doc ID if needed
+                                    complaintList.add(complaint);
+                                }
+                            }
                         }
                     }
                     successListener.onSuccess(complaintList);
                 })
                 .addOnFailureListener(failureListener);
     }
+
 
     public void addMeterReading(String meterId, String date, Object value,
                                 OnSuccessListener<Void> successListener,
