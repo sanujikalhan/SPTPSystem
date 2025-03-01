@@ -3,4 +3,25 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#80c977</color>
+    <color name="primary">#4CAF50</color> <!-- Example: Green (Material Design) -->
+    <color name="gray_light">#E0E0E0</color>  <!-- Light Gray (Material Design) -->
+    <color name="light_gray">#F5F5F5</color>  <!-- Light gray background -->
+    <style name="EditTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@drawable/edittext_bg</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="RoomButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>
+

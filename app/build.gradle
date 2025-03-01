@@ -76,8 +76,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.14.9'
     implementation 'com.facebook.soloader:soloader:0.10.4+'
     implementation 'com.thingclips.smart:thingsmart:5.17.0'
-    implementation 'com.google.android.gms:play-services-location:21.0.1'
-    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.android.gms:play-services-auth:20.7.0' // For authentication
+    implementation 'com.google.android.gms:play-services-location:21.0.1' // If using location
+    implementation 'com.google.android.gms:play-services-base:18.2.0' // Core services
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'

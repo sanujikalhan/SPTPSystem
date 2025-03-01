@@ -1,77 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:background="@color/light_gray">
 
-  <!-- ImageView centered at the top -->
+  <!-- Background Image with Overlay -->
   <ImageView
-      android:id="@+id/imageView"
-      android:layout_width="wrap_content"
+      android:id="@+id/backgroundImage"
+      android:layout_width="match_parent"
+      android:layout_height="400dp"
+      android:scaleType="centerCrop"
+      android:src="@drawable/pm"
+      android:background="@drawable/gradient_overlay"/>
+
+  <!-- Login Card -->
+  <LinearLayout
+      android:id="@+id/loginCard"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="50dp"
-      android:adjustViewBounds="true"
-      android:maxWidth="339dp"
-      android:maxHeight="335dp"
-      app:srcCompat="@drawable/pm" />
+      android:layout_marginTop="400dp"
+      android:layout_centerHorizontal="true"
+      android:orientation="vertical"
+      android:padding="24dp"
+      android:background="@drawable/card_bg"
+      android:elevation="4dp">
 
-  <!-- ProgressBar centered below the ImageView -->
-  <ProgressBar
-      android:id="@+id/progressBar"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:visibility="gone"
-      android:layout_marginTop="20dp"
-      android:max="100"
-      android:progress="0"
-      android:indeterminate="false" />
+    <!-- Title -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-  <!-- Email EditText -->
-  <EditText
-      android:id="@+id/userName"
-      android:layout_width="match_parent"
-      android:layout_height="50dp"
-      android:layout_marginTop="30dp"
-      android:hint="@string/email_address"
-      android:inputType="textEmailAddress"
-      android:padding="10dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="5dp"/>
 
-  <!-- Password EditText -->
-  <EditText
-      android:id="@+id/password"
-      android:layout_width="match_parent"
-      android:layout_height="50dp"
-      android:layout_marginTop="10dp"
-      android:hint="@string/Password"
-      android:inputType="textPassword"
-      android:padding="10dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login to your account"
+        android:textSize="14sp"
+        android:textColor="#575757"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="15dp"/>
 
-  <!-- Login Button -->
-  <Button
-      android:id="@+id/Login"
-      android:layout_width="match_parent"
-      android:layout_height="60dp"
-      android:layout_marginTop="25dp"
-      android:gravity="center"
-      android:text="@string/login"
-      android:textSize="20sp"
-      android:backgroundTint="@color/black"
-      android:textColor="@android:color/white" /> <!-- Adjust text color for better contrast -->
+    <!-- Email Input -->
+    <EditText
+        android:id="@+id/userName"
+        style="@style/EditTextStyle"
+        android:layout_marginBottom="10dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"/>
 
-  <!-- SignUp Button -->
-  <Button
+    <!-- Password Input -->
+    <EditText
+        android:id="@+id/password"
+        style="@style/EditTextStyle"
+        android:hint="Password"
+        android:inputType="textPassword"/>
+
+    <!-- Forgot Password -->
+    <TextView
+        android:id="@+id/forgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot?"
+        android:textColor="@color/green"
+        android:textStyle="bold"
+        android:layout_gravity="end"
+        android:layout_marginTop="5dp"/>
+
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/Login"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Sign In"
+        android:textSize="18sp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/button_bg_outline"
+        android:textColor="@color/white"/>
+
+    <!-- Or separator -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="or"
+        android:textColor="#575757"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Google Sign In Button -->
+    <Button
+        android:id="@+id/googleSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Sign in with Google"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_bg_outline"
+        android:textColor="@color/white"/>
+
+  </LinearLayout>
+
+  <!-- Sign Up Suggestion -->
+  <TextView
       android:id="@+id/SignUp"
-      android:layout_width="match_parent"
-      android:layout_height="60dp"
-      android:layout_marginTop="10dp"
-      android:gravity="center"
-      android:text="@string/SignUp"
-      android:textSize="20sp"
-      android:backgroundTint="@color/black"
-      android:textColor="@android:color/white"/> <!-- Adjust text color for better contrast -->
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Create account? "
+      android:textColor="#575757"
+      android:layout_below="@id/loginCard"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="20dp"/>
 
-</LinearLayout>
+
+</RelativeLayout>

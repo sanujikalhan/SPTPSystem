@@ -69,9 +69,19 @@
         android:icon="@drawable/bill"
         android:orderInCategory="10" />
     <item
+        android:id="@+id/nav_tech_complaint"
+        android:title="Add T Complaint"
+        android:icon="@drawable/bill"
+        android:orderInCategory="11" />
+    <item
+        android:id="@+id/nav_admin_complaint"
+        android:title="Add admin Complaint"
+        android:icon="@drawable/bill"
+        android:orderInCategory="12" />
+    <item
         android:id="@+id/nav_complaint"
         android:title="Add Complaint"
         android:icon="@drawable/bill"
-        android:orderInCategory="11" />
+        android:orderInCategory="13" />
 </menu>
 

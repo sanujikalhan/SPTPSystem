@@ -1,5 +1,7 @@
 package com.example.sptm_systerm;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -69,12 +71,27 @@ public class Home extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private FirebaseService firebaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
+        firebaseService = new FirebaseService();
+        firebaseService.getUserRole(
+                role -> {
+                    // Successfully retrieved role
+                    GlobalVariable.userRole = role;
+                    Log.d(TAG, "User Role: " + role);
+                },
+                e -> {
+                    // Failed to retrieve role
+                    Log.e(TAG, "Error getting user role", e);
+                    Toast.makeText(Home.this, "Failed to get user role", Toast.LENGTH_SHORT).show();
+                }
+        );
+
 
         // Initialize the TextViews for device information
         deviceName = findViewById(R.id.devicename);
@@ -93,9 +110,19 @@ public class Home extends AppCompatActivity {
         // Initialize views
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        // 🔹 Check if navigationView is NULL before accessing it
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+        if (navigationView != null) {
+            View headerView = navigationView.getHeaderView(0);
+            TextView navUsername = headerView.findViewById(R.id.nav_header_title);
+            TextView navEmail = headerView.findViewById(R.id.nav_header_email);
+
+            navUsername.setText(GlobalVariable.subscriptionNo);
+            navEmail.setText(GlobalVariable.userRole);
+        } else {
+            Log.e("NavigationView", "NavigationView is null! Check XML layout.");
+        }
         // Disable default toggle
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.open, R.string.close);
@@ -142,6 +169,14 @@ public class Home extends AppCompatActivity {
                 else if (id == R.id.nav_complaint) {
                     // Handle logout
                     startActivity(new Intent(Home.this, ComplaintStatus.class));
+                }
+                else if (id == R.id.nav_admin_complaint) {
+                    // Handle logout
+                    startActivity(new Intent(Home.this, AdminComplaintListActivity.class));
+                }
+                else if (id == R.id.nav_tech_complaint) {
+                    // Handle logout
+                    startActivity(new Intent(Home.this, TechnicianComplaintListActivity.class));
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;

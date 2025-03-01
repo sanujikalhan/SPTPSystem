@@ -73,6 +73,7 @@ public class FirebaseService {
             if (task.isSuccessful() && task.getResult().exists()) {
                 String role = task.getResult().getString("role");
                 GlobalVariable.userRole = role;
+                GlobalVariable.subscriptionNo = task.getResult().getString("subscriptionNo");
                 successListener.onSuccess(role);
             } else {
                 failureListener.onFailure(new Exception("Failed to retrieve user role"));

@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.SPTM_systerm" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Base.Theme.SPTM_systerm" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">#4CAF50</item>  <!-- Green -->
+        <item name="colorPrimaryVariant">#388E3C</item>  <!-- Dark Green -->
+        <item name="colorOnPrimary">#FFFFFF</item>  <!-- White text -->
     </style>
 
     <style name="Theme.SPTM_systerm" parent="Base.Theme.SPTM_systerm" />

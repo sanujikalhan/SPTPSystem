@@ -1,6 +1,8 @@
 package com.example.sptm_systerm;
 
 import static android.content.ContentValues.TAG;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -63,18 +66,21 @@ public class LoginActivity extends AppCompatActivity {
         EditText login = findViewById(R.id.userName);
         EditText passwordd = findViewById(R.id.password);
         Button loginButton = findViewById(R.id.Login);
-        Button signup = findViewById(R.id.SignUp);
+        TextView signup = findViewById(R.id.SignUp);
         progressBar = findViewById(R.id.progressBar);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         firebaseService = new FirebaseService();
+        progressBar.setVisibility(GONE);
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null && ThingHomeSdk.getUserInstance().getUser() != null) {
+            progressBar.setVisibility(VISIBLE);
             firebaseService.getUserRole(
                     role -> {
                         // Role successfully retrieved; you can use the role if needed
                         redirectToHome();
+                        progressBar.setVisibility(GONE);
                     },
                     e -> {
                         Toast.makeText(this, "Failed to retrieve user role: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -88,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 progress = 0;
                 progressBar.setProgress(progress);
-                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(VISIBLE);
                 // Retrieve user inputs
                 email = login.getText().toString();
                 password = passwordd.getText().toString();
@@ -130,12 +136,12 @@ public class LoginActivity extends AppCompatActivity {
                 Intent mainScreen = new Intent(LoginActivity.this, Home.class);
                 startActivity(mainScreen);
 
-                progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(GONE);
             }
 
             @Override
             public void onError(String code, String error) {
-                progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(GONE);
                 Toast.makeText(LoginActivity.this, "Not Success", Toast.LENGTH_SHORT).show();
             }
         });
@@ -171,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                             );
                         } else {
-                            progressBar.setVisibility(View.GONE);
+                            progressBar.setVisibility(GONE);
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
