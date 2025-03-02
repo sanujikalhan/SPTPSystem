@@ -8,4 +8,5 @@ public class GlobalVariable {
     public static List<MeterReading> meterReadings = new ArrayList<>();
     public static String pickedDate;
     public static String subscriptionNo;
+    public static String room;
 }

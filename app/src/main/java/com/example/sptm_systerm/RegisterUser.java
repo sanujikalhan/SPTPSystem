@@ -83,18 +83,29 @@ public class RegisterUser extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressDialog.show();
-                emails = emailField.getText().toString();
-                passwords = passwordField.getText().toString();
-                firstname = Name.getText().toString();
-                lastnames = lastname.getText().toString();
-                addresses = address.getText().toString();
-                nics = nic.getText().toString();
-                mobiles = mobile.getText().toString();
-                regNo = reg.getText().toString();
+
+                // Retrieve and Trim User Inputs
+                emails = emailField.getText().toString().trim();
+                passwords = passwordField.getText().toString().trim();
+                firstname = Name.getText().toString().trim();
+                lastnames = lastname.getText().toString().trim();
+                addresses = address.getText().toString().trim();
+                nics = nic.getText().toString().trim();
+                mobiles = mobile.getText().toString().trim();
+                regNo = reg.getText().toString().trim();
                 selectedRole = spinnerUserRole.getSelectedItem().toString();
+
+                // Validate Input
+                if (!isValidInput(emails, passwords, firstname, lastnames, addresses, nics, mobiles, regNo)) {
+                    progressDialog.dismiss();
+                    return; // Stop execution if input is invalid
+                }
+
+                registerBtn.setEnabled(false); // Prevent multiple clicks
                 registerUser();
             }
         });
+
     }
 
     private void registerUser() {
@@ -102,6 +113,8 @@ public class RegisterUser extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        registerBtn.setEnabled(true); // Re-enable button after attempt
+
                         if (task.isSuccessful()) {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
@@ -114,6 +127,64 @@ public class RegisterUser extends AppCompatActivity {
                     }
                 });
     }
+
+    private boolean isValidInput(String email, String password, String firstname, String lastname,
+                                 String address, String nic, String mobile, String regNo) {
+
+        if (firstname.isEmpty()) {
+            Toast.makeText(RegisterUser.this, "First name cannot be empty!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (lastname.isEmpty()) {
+            Toast.makeText(RegisterUser.this, "Last name cannot be empty!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (address.isEmpty()) {
+            Toast.makeText(RegisterUser.this, "Address cannot be empty!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (email.isEmpty()) {
+            Toast.makeText(RegisterUser.this, "Email cannot be empty!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(RegisterUser.this, "Enter a valid email address!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (password.isEmpty()) {
+            Toast.makeText(RegisterUser.this, "Password cannot be empty!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (password.length() < 6) {
+            Toast.makeText(RegisterUser.this, "Password must be at least 6 characters!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (nic.isEmpty() || !nic.matches("^[0-9]{9}[VvXx]$|^[0-9]{12}$")) {
+            // Example: 9-digit NIC + "V" (old format) OR 12-digit new NIC
+            Toast.makeText(RegisterUser.this, "Enter a valid NIC number!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (mobile.isEmpty() || !mobile.matches("^[0-9]{10}$")) {
+            Toast.makeText(RegisterUser.this, "Enter a valid 10-digit mobile number!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (regNo.isEmpty()) {
+            Toast.makeText(RegisterUser.this, "Registration number cannot be empty!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
 
     private void registerWithTuya(String email, String password) {
         String verificationCode = verificationCodeField.getText().toString();

@@ -80,7 +80,26 @@ public class FirebaseService {
             }
         });
     }
+    public void addDeviceReading(String roomName, String deviceName, String dateTime, double value,
+                                 OnSuccessListener<Void> successListener,
+                                 OnFailureListener failureListener) {
+        // Path: rooms/{roomName}/devices/{deviceName}
+        db.collection(roomName) // Collection for Room
+                .document(deviceName) // Document for Device
+                .update(dateTime, value) // Add/Update data with timestamp as field
+                .addOnSuccessListener(successListener)
+                .addOnFailureListener(e -> {
+                    // If document does not exist, create it
+                    Map<String, Object> data = new HashMap<>();
+                    data.put(dateTime, value);
 
+                    db.collection(roomName)
+                            .document(deviceName)
+                            .set(data)
+                            .addOnSuccessListener(successListener)
+                            .addOnFailureListener(failureListener);
+                });
+    }
     public void subscribeToMeterReadings(String meterId, OnSuccessListener<List<Map<String, Object>>> successListener,
                                          OnFailureListener failureListener) {
         db.collection("meter_readings").document(meterId)

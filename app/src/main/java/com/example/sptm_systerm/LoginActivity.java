@@ -104,16 +104,21 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 progress = 0;
                 progressBar.setProgress(progress);
-                progressBar.setVisibility(VISIBLE);
-                // Retrieve user inputs
-                email = login.getText().toString();
-                password = passwordd.getText().toString();
-                signIn(email,password);
-                // Validate inputs
-                if (!Logged) {
-                    //signIn(email,password);
+                progressBar.setVisibility(View.VISIBLE);
 
+                // Retrieve user inputs
+                email = login.getText().toString().trim();
+                password = passwordd.getText().toString().trim();
+
+                // Validate Inputs
+                if (!isValidInput(email, password)) {
+                    progressBar.setVisibility(View.GONE); // Hide progress bar if validation fails
+                    return; // Stop execution
                 }
+
+                loginButton.setEnabled(false); // Prevent multiple clicks during authentication
+
+                signIn(email, password);
             }
         });
 
@@ -125,6 +130,29 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+    }
+    private boolean isValidInput(String email, String password) {
+        if (email.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "Email cannot be empty!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(LoginActivity.this, "Enter a valid email address!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (password.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "Password cannot be empty!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (password.length() < 6) {
+            Toast.makeText(LoginActivity.this, "Password must be at least 6 characters long!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 
     private void redirectToHome() {
@@ -174,9 +202,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
-
-
     private void signIn(String email, String password) {
         progress = 5;
         progressBar.setProgress(progress);

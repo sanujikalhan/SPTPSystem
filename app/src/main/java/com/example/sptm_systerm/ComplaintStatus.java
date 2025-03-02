@@ -3,6 +3,7 @@ package com.example.sptm_systerm;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -140,30 +141,66 @@ public class ComplaintStatus extends AppCompatActivity implements OnMapReadyCall
     }
 
     /** Submits the complaint with the selected details. */
+    /** Submits the complaint with the selected details after validation. */
     private void submitComplaint() {
         String subNo = subscriptionNumber.getText().toString().trim();
         String complaintMsg = complaintText.getText().toString().trim();
 
-        if (subNo.isEmpty() || complaintMsg.isEmpty()) {
-            Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show();
+        // Validate Subscription Number
+        if (subNo.isEmpty()) {
+            Toast.makeText(this, "Please enter Subscription Number", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        if (!subNo.matches("^[0-9]+$")) { // Ensure it's only numbers
+            Toast.makeText(this, "Subscription Number must be numeric!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validate Complaint Text
+        if (complaintMsg.isEmpty()) {
+            Toast.makeText(this, "Please describe your complaint", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validate Date Selection (Prevent future complaints for past events)
+        Calendar today = Calendar.getInstance();
+        Calendar selectedCalendar = Calendar.getInstance();
+        selectedCalendar.set(datePickerText.getYear(), datePickerText.getMonth(), datePickerText.getDayOfMonth());
+
+        if (selectedCalendar.after(today)) {
+            Toast.makeText(this, "Complaint date cannot be in the future!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validate Location Selection
+        if (selectedLatitude == 0.0 && selectedLongitude == 0.0) {
+            Toast.makeText(this, "Please select a valid location on the map", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Format Date
         String formattedDate = datePickerText.getDayOfMonth() + "-" +
                 (datePickerText.getMonth() + 1) + "-" +
                 datePickerText.getYear();
         String locationString = selectedLatitude + "," + selectedLongitude;
 
+        // Create Complaint Object
         Complaint complaint = new Complaint(subNo, complaintMsg, formattedDate, locationString, "Pending", "Not Fixed yet");
 
+        // Submit to Firestore
         firebaseService.addComplaint(complaint,
                 documentReference -> {
-                    Toast.makeText(this, "Complaint added!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Complaint submitted successfully!", Toast.LENGTH_SHORT).show();
                     finish();
                 },
-                e -> Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                e -> {
+                    Toast.makeText(this, "Submission failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("ComplaintSubmission", "Error: ", e);
+                }
         );
     }
+
 
     // Handle lifecycle events for MapView
     @Override public void onResume() { super.onResume(); mapView3.onResume(); }

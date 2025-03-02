@@ -21,9 +21,12 @@ import com.thingclips.smart.sdk.api.IThingDevice;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class DeviceActivity extends AppCompatActivity {
@@ -50,6 +53,7 @@ public class DeviceActivity extends AppCompatActivity {
     private List<BarEntry> currentEntries = new ArrayList<>();
     private List<BarEntry> powerEntries = new ArrayList<>();
     private long changedTime = 0;
+    private DeviceStorage deviceStorage;
 
     // Stopwatch variables
     private long startTime = 0;
@@ -58,6 +62,7 @@ public class DeviceActivity extends AppCompatActivity {
     private boolean running = false;
     private Handler stopwatchHandler = new Handler();
     private EditText threshold;
+    private FirebaseService firebaseService;
     private Runnable updateTimeRunnable = new Runnable() {
         @Override
         public void run() {
@@ -108,6 +113,7 @@ public class DeviceActivity extends AppCompatActivity {
         timeDisplay = findViewById(R.id.timeDisplay); // Stopwatch display
         usageText = findViewById(R.id.usage);
         threshold = findViewById(R.id.limit);
+        firebaseService = new FirebaseService();
 
         sharedPreferences = getSharedPreferences("DeviceTiming", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -119,7 +125,7 @@ public class DeviceActivity extends AppCompatActivity {
         backgroundHandler = new Handler(handlerThread.getLooper());
         retryHandler = new Handler(Looper.getMainLooper());
 
-        DeviceStorage deviceStorage = new DeviceStorage(this);
+        deviceStorage = new DeviceStorage(this);
         deviceId = deviceStorage.getDevId();
 
         fetchDeviceStatus(); // Start fetching device data
@@ -225,6 +231,20 @@ public class DeviceActivity extends AppCompatActivity {
                 try {
                     dpJson = new JSONObject(dpStr);
                     power = dpJson.getDouble("19") / 10;
+                    firebaseService.addDeviceReading(
+                            deviceStorage.getHomeId(),               // Room Name
+                            deviceId,             // Device Name
+                            getCurrentDateTime(),  // Date and Time (formatted)
+                            power,                 // Value (double)
+                            aVoid -> {
+                                // Success Callback
+                                Log.d("Firebase", "Reading added successfully!");
+                            },
+                            e -> {
+                                // Failure Callback
+                                Log.e("Firebase", "Error adding reading: " + e.getMessage());
+                            }
+                    );
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
@@ -271,7 +291,10 @@ public class DeviceActivity extends AppCompatActivity {
             }
         });
     }
-
+    public static String getCurrentDateTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+        return sdf.format(Calendar.getInstance().getTime());
+    }
     private void retryRegisterListener() {
         if (retryCount >= MAX_RETRIES) {
             Log.e(TAG, "Max retries reached. Stopping reconnection attempts.");

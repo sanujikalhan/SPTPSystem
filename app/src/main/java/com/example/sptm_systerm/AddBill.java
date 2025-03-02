@@ -115,14 +115,22 @@ public class AddBill extends AppCompatActivity {
     }
 
     /** Function to Handle Bill Submission */
+    /** Function to Handle Bill Submission */
     private void submitBill() {
         String subscriptionNo = subscriptionNumber.getText().toString().trim();
 
+        // Validate Subscription Number
         if (subscriptionNo.isEmpty()) {
             Toast.makeText(this, "Please enter Subscription Number", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        if (!subscriptionNo.matches("^[0-9]+$")) { // Ensure it contains only numbers
+            Toast.makeText(this, "Subscription Number must be numeric!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validate Date Selection
         if (selectedDate.isEmpty()) {
             Toast.makeText(this, "Please pick a date", Toast.LENGTH_SHORT).show();
             return;
@@ -130,22 +138,36 @@ public class AddBill extends AppCompatActivity {
 
         GlobalVariable.pickedDate = selectedDate;
 
+        // Call Firebase to retrieve meter readings
         firebaseService.subscribeToMeterReadings(subscriptionNo,
                 readingsList -> {
-                    List<MeterReading> meterReadings = new ArrayList<>();
+                    if (readingsList == null || readingsList.isEmpty()) {
+                        Toast.makeText(AddBill.this, "No meter readings found for this subscription!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
+                    List<MeterReading> meterReadings = new ArrayList<>();
                     for (Map<String, Object> reading : readingsList) {
                         String date = reading.get("date").toString();
                         Object value = reading.get("value");
+
+                        if (value == null) {
+                            Toast.makeText(AddBill.this, "Invalid reading value detected!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
                         meterReadings.add(new MeterReading(date, value));
                     }
 
+                    // Store meter readings globally and navigate to Bill Generation
                     GlobalVariable.meterReadings = meterReadings;
-
                     Intent intent = new Intent(AddBill.this, BillGeneration.class);
                     startActivity(intent);
                 },
-                e -> Toast.makeText(AddBill.this, "Failed to retrieve meter readings: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                e -> {
+                    Log.e("FirebaseError", "Failed to retrieve meter readings", e);
+                    Toast.makeText(AddBill.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
         );
     }
 
