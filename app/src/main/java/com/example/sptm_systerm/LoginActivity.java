@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                     return; // Stop execution
                 }
 
-                loginButton.setEnabled(false); // Prevent multiple clicks during authentication
+//                loginButton.setEnabled(false); // Prevent multiple clicks during authentication
 
                 signIn(email, password);
             }
@@ -202,6 +202,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
     private void signIn(String email, String password) {
         progress = 5;
         progressBar.setProgress(progress);
@@ -221,6 +222,7 @@ public class LoginActivity extends AppCompatActivity {
                                         // Successfully retrieved role
                                         GlobalVariable.userRole = role;
                                         Log.d(TAG, "User Role: " + role);
+                                        redirectToHome();
                                     },
                                     e -> {
                                         // Failed to retrieve role

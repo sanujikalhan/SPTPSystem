@@ -266,22 +266,23 @@ public class Home extends AppCompatActivity {
         menu.findItem(R.id.nav_settings).setVisible(false);
         menu.findItem(R.id.nav_payment).setVisible(false);
 
-        // Enable menu items based on user role
-        if (GlobalVariable.userRole.equals("User")) {
-            menu.findItem(R.id.nav_home).setVisible(true);
-            menu.findItem(R.id.nav_view_bill).setVisible(true);
-            menu.findItem(R.id.nav_lodge_complaint).setVisible(true);
-            menu.findItem(R.id.nav_user_complaints_list).setVisible(true);
-            menu.findItem(R.id.nav_user_loyalty_points).setVisible(true);
-        } else if (GlobalVariable.userRole.equals("Admin")) {
-            menu.findItem(R.id.nav_admin_complaint).setVisible(true);
-            menu.findItem(R.id.nav_user_loyalty_points).setVisible(true);
-        } else if (GlobalVariable.userRole.equals("Reader")) {
-            menu.findItem(R.id.nav_add_biill).setVisible(true);
-        } else if (GlobalVariable.userRole.equals("Technician")) {
-            menu.findItem(R.id.nav_tech_complaint).setVisible(true);
-            menu.findItem(R.id.nav_complaint_status).setVisible(true);
-        }
+        if(GlobalVariable.userRole != null)
+            // Enable menu items based on user role
+            if (GlobalVariable.userRole.equals("User")) {
+                menu.findItem(R.id.nav_home).setVisible(true);
+                menu.findItem(R.id.nav_view_bill).setVisible(true);
+                menu.findItem(R.id.nav_lodge_complaint).setVisible(true);
+                menu.findItem(R.id.nav_user_complaints_list).setVisible(true);
+                menu.findItem(R.id.nav_user_loyalty_points).setVisible(true);
+            } else if (GlobalVariable.userRole.equals("Admin")) {
+                menu.findItem(R.id.nav_admin_complaint).setVisible(true);
+                menu.findItem(R.id.nav_user_loyalty_points).setVisible(true);
+            } else if (GlobalVariable.userRole.equals("Reader")) {
+                menu.findItem(R.id.nav_add_biill).setVisible(true);
+            } else if (GlobalVariable.userRole.equals("Technician")) {
+                menu.findItem(R.id.nav_tech_complaint).setVisible(true);
+                menu.findItem(R.id.nav_complaint_status).setVisible(true);
+            }
 
         // Always show Logout
         menu.findItem(R.id.nav_logout).setVisible(true);
