@@ -1,7 +1,5 @@
 package com.example.sptm_systerm;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +8,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -72,27 +69,12 @@ public class Home extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private FirebaseService firebaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
-        firebaseService = new FirebaseService();
-        firebaseService.getUserRole(
-                role -> {
-                    // Successfully retrieved role
-                    GlobalVariable.userRole = role;
-                    Log.d(TAG, "User Role: " + role);
-                },
-                e -> {
-                    // Failed to retrieve role
-                    Log.e(TAG, "Error getting user role", e);
-                    Toast.makeText(Home.this, "Failed to get user role", Toast.LENGTH_SHORT).show();
-                }
-        );
-
 
         // Initialize the TextViews for device information
         deviceName = findViewById(R.id.devicename);
@@ -111,19 +93,9 @@ public class Home extends AppCompatActivity {
         // Initialize views
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // 🔹 Check if navigationView is NULL before accessing it
+
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        if (navigationView != null) {
-            View headerView = navigationView.getHeaderView(0);
-            TextView navUsername = headerView.findViewById(R.id.nav_header_title);
-            TextView navEmail = headerView.findViewById(R.id.nav_header_email);
-
-            navUsername.setText(GlobalVariable.subscriptionNo);
-            navEmail.setText(GlobalVariable.userRole);
-        } else {
-            Log.e("NavigationView", "NavigationView is null! Check XML layout.");
-        }
         // Disable default toggle
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.open, R.string.close);
@@ -145,31 +117,25 @@ public class Home extends AppCompatActivity {
                 int id = item.getItemId();
 
                 if (id == R.id.nav_view_bill) {
-                    startActivity(new Intent(Home.this, AddBill.class));
+                    // Open View Electricity Bill Activity
+                    startActivity(new Intent(Home.this, ElectricityBill.class));
                 } else if (id == R.id.nav_lodge_complaint) {
-                    startActivity(new Intent(Home.this, ComplaintStatus.class));
-                }else if (id == R.id.nav_user_loyalty_points) {
-                    if (!GlobalVariable.userRole.equals("User")) {
-                        startActivity(new Intent(Home.this, LoyaltyConfigActivity.class));
-                    } else {
-                        startActivity(new Intent(Home.this, LoyalityPoints.class));
-                    }
+                    // Open Lodge Complaint Activity
+                    startActivity(new Intent(Home.this, LodgeComplaint.class));
+                } else if (id == R.id.nav_generate_bill) {
+                    // Open Bill Generation Activity
+                    startActivity(new Intent(Home.this, BillGeneration.class));
+                } else if (id == R.id.nav_user_loyalty_points) {
+                    // Open User Loyalty Points Activity
+                    startActivity(new Intent(Home.this, LoyaltyPoints.class));
                 } else if (id == R.id.nav_complaint_status) {
+                    // Open Complaint Status Activity
                     startActivity(new Intent(Home.this, ComplaintStatus.class));
                 } else if (id == R.id.nav_logout) {
+                    // Handle logout
                     Toast.makeText(Home.this, "Logged out", Toast.LENGTH_SHORT).show();
-                } else if (id == R.id.nav_add_biill) {
-                    startActivity(new Intent(Home.this, AddBill.class));
-                } else if (id == R.id.nav_admin_complaint) {
-                    startActivity(new Intent(Home.this, AdminComplaintListActivity.class));
-                } else if (id == R.id.nav_tech_complaint) {
-                    startActivity(new Intent(Home.this, TechnicianComplaintListActivity.class));
-                } else if (id == R.id.nav_user_complaints_list) {
-                    startActivity(new Intent(Home.this, UserComplaintHistoryActivity.class));
                 }
-                else if (id == R.id.nav_payment) {
-                    startActivity(new Intent(Home.this, Payment.class));
-                }
+
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
@@ -190,8 +156,8 @@ public class Home extends AppCompatActivity {
 
         }
         else {
-        // Proceed with binding
-        createHome(HomeName, roomList);
+            // Proceed with binding
+            createHome(HomeName, roomList);
         }
 
 
@@ -246,46 +212,7 @@ public class Home extends AppCompatActivity {
                 startActivity(linear);
             }
         });
-        hideMenuItemsForRoles();
-    }
-    /** Hide navigation menu items dynamically based on user role */
-    private void hideMenuItemsForRoles() {
-        Menu menu = navigationView.getMenu();
 
-        // Hide all menu items first
-        menu.findItem(R.id.nav_home).setVisible(false);
-        menu.findItem(R.id.nav_view_bill).setVisible(false);
-        menu.findItem(R.id.nav_lodge_complaint).setVisible(false);
-        menu.findItem(R.id.nav_user_complaints_list).setVisible(false);
-        menu.findItem(R.id.nav_user_loyalty_points).setVisible(false);
-        menu.findItem(R.id.nav_add_biill).setVisible(false);
-        menu.findItem(R.id.nav_admin_complaint).setVisible(false);
-        menu.findItem(R.id.nav_tech_complaint).setVisible(false);
-        menu.findItem(R.id.nav_complaint_status).setVisible(false);
-        menu.findItem(R.id.nav_profile).setVisible(false);
-        menu.findItem(R.id.nav_settings).setVisible(false);
-        menu.findItem(R.id.nav_payment).setVisible(false);
-
-        if(GlobalVariable.userRole != null)
-            // Enable menu items based on user role
-            if (GlobalVariable.userRole.equals("User")) {
-                menu.findItem(R.id.nav_home).setVisible(true);
-                menu.findItem(R.id.nav_view_bill).setVisible(true);
-                menu.findItem(R.id.nav_lodge_complaint).setVisible(true);
-                menu.findItem(R.id.nav_user_complaints_list).setVisible(true);
-                menu.findItem(R.id.nav_user_loyalty_points).setVisible(true);
-            } else if (GlobalVariable.userRole.equals("Admin")) {
-                menu.findItem(R.id.nav_admin_complaint).setVisible(true);
-                menu.findItem(R.id.nav_user_loyalty_points).setVisible(true);
-            } else if (GlobalVariable.userRole.equals("Reader")) {
-                menu.findItem(R.id.nav_add_biill).setVisible(true);
-            } else if (GlobalVariable.userRole.equals("Technician")) {
-                menu.findItem(R.id.nav_tech_complaint).setVisible(true);
-                menu.findItem(R.id.nav_complaint_status).setVisible(true);
-            }
-
-        // Always show Logout
-        menu.findItem(R.id.nav_logout).setVisible(true);
     }
 
     private Drawable resizeDrawable(Drawable image, int width, int height) {
@@ -405,7 +332,7 @@ public class Home extends AppCompatActivity {
                 })
         );
 
-            mThingActivator.start(); // Start the activator here
+        mThingActivator.start(); // Start the activator here
 
     }
 
@@ -485,7 +412,7 @@ public class Home extends AppCompatActivity {
                 List<DeviceBean> deviceList = bean.getDeviceList();
                 if (!deviceList.isEmpty()) {
                     currentDeviceBeam = deviceList.get(0);
-                     //onDeviceBound(currentDeviceBeam);  // Update UI and save device info
+                    //onDeviceBound(currentDeviceBeam);  // Update UI and save device info
                 } else {
                     Toast.makeText(Home.this, "No device found in the home", Toast.LENGTH_SHORT).show();
                     createHome(HomeName, roomList);
