@@ -69,13 +69,6 @@ public class AddBill extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Set Custom Icon for Toggle Button
-        if (getSupportActionBar() != null) {
-            Drawable drawable = getResources().getDrawable(R.drawable.menu);
-            Drawable resizedDrawable = resizeDrawable(drawable, 24, 24);
-            getSupportActionBar().setHomeAsUpIndicator(resizedDrawable);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
 
         // Handle Navigation Drawer Item Clicks
         setupNavigationDrawer();
@@ -117,15 +110,15 @@ public class AddBill extends AppCompatActivity {
     /** Function to Handle Bill Submission */
     /** Function to Handle Bill Submission */
     private void submitBill() {
-        String subscriptionNo = subscriptionNumber.getText().toString().trim();
+        GlobalVariable.subscriptionNo = subscriptionNumber.getText().toString().trim();
 
         // Validate Subscription Number
-        if (subscriptionNo.isEmpty()) {
+        if (GlobalVariable.subscriptionNo.isEmpty()) {
             Toast.makeText(this, "Please enter Subscription Number", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (!subscriptionNo.matches("^[0-9]+$")) { // Ensure it contains only numbers
+        if (!GlobalVariable.subscriptionNo.matches("^[0-9]+$")) { // Ensure it contains only numbers
             Toast.makeText(this, "Subscription Number must be numeric!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -139,7 +132,7 @@ public class AddBill extends AppCompatActivity {
         GlobalVariable.pickedDate = selectedDate;
 
         // Call Firebase to retrieve meter readings
-        firebaseService.subscribeToMeterReadings(subscriptionNo,
+        firebaseService.subscribeToMeterReadings(GlobalVariable.subscriptionNo,
                 readingsList -> {
                     if (readingsList == null || readingsList.isEmpty()) {
                         Toast.makeText(AddBill.this, "No meter readings found for this subscription!", Toast.LENGTH_SHORT).show();
@@ -154,6 +147,7 @@ public class AddBill extends AppCompatActivity {
                         if (value == null) {
                             Toast.makeText(AddBill.this, "Invalid reading value detected!", Toast.LENGTH_SHORT).show();
                             return;
+
                         }
 
                         meterReadings.add(new MeterReading(date, value));
@@ -167,6 +161,8 @@ public class AddBill extends AppCompatActivity {
                 e -> {
                     Log.e("FirebaseError", "Failed to retrieve meter readings", e);
                     Toast.makeText(AddBill.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(AddBill.this, BillGeneration.class);
+                    startActivity(intent);
                 }
         );
     }

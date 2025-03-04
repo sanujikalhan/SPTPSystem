@@ -2,12 +2,9 @@ package com.example.sptm_systerm;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +35,7 @@ import com.thingclips.smart.sdk.enums.ActivatorEZStepCode;
 import com.thingclips.smart.sdk.enums.ActivatorModelEnum;
 
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -48,8 +46,8 @@ public class Home extends AppCompatActivity {
     String HomeName = "myhome";
     String[] rooms= {"room1","room2","room3","room4"};
     private HomeBean currentHomeBeam;
-    private String ssid = "ERANDA"; //"NACK899""Redmi Note 13"
-    private String password = "19765320"; //"54844bF1"
+    private String ssid = "Redmi Note 13"; //"NACK899""Redmi Note 13" //"Redmi Note 13"
+    private String password = "chathurikarich"; //"54844bF1"
     private DeviceBean currentDeviceBeam;
     private IThingActivator mThingActivator;
     private boolean isPlugOn = false;
@@ -63,13 +61,10 @@ public class Home extends AppCompatActivity {
     private static long homeId;
     private String deviceNam;
     private LinearLayout linearLayout;
+    private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +72,7 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         // Initialize the TextViews for device information
+
         deviceName = findViewById(R.id.devicename);
         deviceId = findViewById(R.id.deviceid);
         productId = findViewById(R.id.productid);
@@ -90,7 +86,8 @@ public class Home extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
         linearLayout= findViewById(R.id.linearL);
         deviceStorage = new DeviceStorage(this);
-        // Initialize views
+        // new add
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -103,14 +100,6 @@ public class Home extends AppCompatActivity {
         toggle.setDrawerIndicatorEnabled(true);  // Disable default hamburger icon
         toggle.syncState();
 
-        // Set custom icon for the toggle button
-        if (getSupportActionBar() != null) {
-            Drawable drawable = getResources().getDrawable(R.drawable.menu);
-            Drawable resizedDrawable = resizeDrawable(drawable, 24, 24); // Resize if needed
-            getSupportActionBar().setHomeAsUpIndicator(resizedDrawable);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        // Handle Navigation Item Clicks
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -121,26 +110,23 @@ public class Home extends AppCompatActivity {
                     startActivity(new Intent(Home.this, ElectricityBill.class));
                 } else if (id == R.id.nav_lodge_complaint) {
                     // Open Lodge Complaint Activity
-                    startActivity(new Intent(Home.this, LodgeComplaint.class));
-                } else if (id == R.id.nav_generate_bill) {
-                    // Open Bill Generation Activity
-                    startActivity(new Intent(Home.this, BillGeneration.class));
+                    startActivity(new Intent(Home.this, ComplaintStatus.class));
                 } else if (id == R.id.nav_user_loyalty_points) {
                     // Open User Loyalty Points Activity
                     startActivity(new Intent(Home.this, LoyaltyPoints.class));
-                } else if (id == R.id.nav_complaint_status) {
-                    // Open Complaint Status Activity
-                    startActivity(new Intent(Home.this, ComplaintStatus.class));
-                } else if (id == R.id.nav_logout) {
-                    // Handle logout
-                    Toast.makeText(Home.this, "Logged out", Toast.LENGTH_SHORT).show();
+                }else if (id == R.id.nav_user_complaints_list) {
+                    startActivity(new Intent(Home.this, UserComplaintHistoryActivity.class));
+                }
+                else if (id == R.id.nav_payment) {
+                    startActivity(new Intent(Home.this, Payment.class));
                 }
 
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
-        });
+        });        //new add
 
+        hideMenuItemsForRoles();
 
         if(deviceStorage.getDevId() !=null){
             queryHomeDetail();
@@ -215,29 +201,6 @@ public class Home extends AppCompatActivity {
 
     }
 
-    private Drawable resizeDrawable(Drawable image, int width, int height) {
-        if (image instanceof BitmapDrawable) {
-            Bitmap bitmap = ((BitmapDrawable) image).getBitmap();
-            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, width, height, true);
-            return new BitmapDrawable(getResources(), resizedBitmap);
-        } else {
-            return image; // Return original if not BitmapDrawable
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
     private void createHome(String home, List<String> roomList) {
         ThingHomeSdk.getHomeManagerInstance().createHome(home, 0, 0, "", roomList, new IThingHomeResultCallback() {
             @Override
@@ -288,7 +251,7 @@ public class Home extends AppCompatActivity {
                 .setContext(this)
                 .setPassword(password)
                 .setActivatorModel(ActivatorModelEnum.THING_EZ)
-                .setTimeOut(1000)
+                .setTimeOut(100)
                 .setToken(token)
                 .setListener(new IThingSmartActivatorListener() {
 
@@ -348,10 +311,6 @@ public class Home extends AppCompatActivity {
                 new IResultCallback() {
                     @Override
                     public void onSuccess() {
-                        sharedPreferences = getSharedPreferences("DeviceTiming", Context.MODE_PRIVATE);
-                        editor = sharedPreferences.edit();
-                        editor.putBoolean("countdown", true);
-                        editor.apply();
                         Toast.makeText(Home.this, "Plug turned " + (isPlugOn ? "on" : "off"), Toast.LENGTH_SHORT).show();
                     }
 
@@ -425,6 +384,43 @@ public class Home extends AppCompatActivity {
         });
 
     }
+    /** Hide navigation menu items dynamically based on user role */
+    private void hideMenuItemsForRoles() {
+        Menu menu = navigationView.getMenu();
 
+        // Hide all menu items first
+        menu.findItem(R.id.nav_home).setVisible(false);
+        menu.findItem(R.id.nav_view_bill).setVisible(false);
+        menu.findItem(R.id.nav_lodge_complaint).setVisible(false);
+        menu.findItem(R.id.nav_user_complaints_list).setVisible(false);
+        menu.findItem(R.id.nav_user_loyalty_points).setVisible(false);
+        menu.findItem(R.id.nav_add_biill).setVisible(false);
+        menu.findItem(R.id.nav_admin_complaint).setVisible(false);
+        menu.findItem(R.id.nav_tech_complaint).setVisible(false);
+        menu.findItem(R.id.nav_complaint_status).setVisible(false);
+        menu.findItem(R.id.nav_profile).setVisible(false);
+        menu.findItem(R.id.nav_settings).setVisible(false);
+        menu.findItem(R.id.nav_payment).setVisible(false);
+
+        // Enable menu items based on user role
+        if (GlobalVariable.userRole.equals("User")) {
+            menu.findItem(R.id.nav_home).setVisible(true);
+            menu.findItem(R.id.nav_view_bill).setVisible(true);
+            menu.findItem(R.id.nav_lodge_complaint).setVisible(true);
+            menu.findItem(R.id.nav_user_complaints_list).setVisible(true);
+            menu.findItem(R.id.nav_user_loyalty_points).setVisible(true);
+        } else if (GlobalVariable.userRole.equals("Admin")) {
+            menu.findItem(R.id.nav_admin_complaint).setVisible(true);
+            menu.findItem(R.id.nav_user_loyalty_points).setVisible(true);
+        } else if (GlobalVariable.userRole.equals("Reader")) {
+            menu.findItem(R.id.nav_add_biill).setVisible(true);
+        } else if (GlobalVariable.userRole.equals("Technician")) {
+            menu.findItem(R.id.nav_tech_complaint).setVisible(true);
+            menu.findItem(R.id.nav_complaint_status).setVisible(true);
+        }
+
+        // Always show Logout
+        menu.findItem(R.id.nav_logout).setVisible(true);
+    }
 
 }
