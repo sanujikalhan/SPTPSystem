@@ -1,6 +1,7 @@
 package com.example.sptm_systerm;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,12 +17,14 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.thingclips.smart.home.sdk.ThingHomeSdk;
 import com.thingclips.smart.home.sdk.bean.HomeBean;
 import com.thingclips.smart.home.sdk.builder.ActivatorBuilder;
@@ -107,7 +110,7 @@ public class Home extends AppCompatActivity {
 
                 if (id == R.id.nav_view_bill) {
                     // Open View Electricity Bill Activity
-                    startActivity(new Intent(Home.this, ElectricityBill.class));
+                    startActivity(new Intent(Home.this, AddBill.class));
                 } else if (id == R.id.nav_lodge_complaint) {
                     // Open Lodge Complaint Activity
                     startActivity(new Intent(Home.this, ComplaintStatus.class));
@@ -120,6 +123,28 @@ public class Home extends AppCompatActivity {
                 else if (id == R.id.nav_payment) {
                     startActivity(new Intent(Home.this, Payment.class));
                 }
+                else if (id == R.id.nav_logout) {
+                    // Show confirmation dialog before logging out
+                    new AlertDialog.Builder(Home.this)
+                            .setTitle("Logout Confirmation")
+                            .setMessage("Are you sure you want to log out?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    FirebaseAuth.getInstance().signOut();
+                                    Toast.makeText(Home.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+
+                                    // Redirect to Login Activity
+                                    Intent intent = new Intent(Home.this, LoginActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clears activity stack
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            })
+                            .setNegativeButton("Cancel", null) // Closes the dialog if "Cancel" is clicked
+                            .show();
+                }
+
 
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;

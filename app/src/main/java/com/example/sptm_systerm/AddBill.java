@@ -118,10 +118,10 @@ public class AddBill extends AppCompatActivity {
             return;
         }
 
-        if (!GlobalVariable.subscriptionNo.matches("^[0-9]+$")) { // Ensure it contains only numbers
-            Toast.makeText(this, "Subscription Number must be numeric!", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (!GlobalVariable.subscriptionNo.matches("^[0-9]+$")) { // Ensure it contains only numbers
+//            Toast.makeText(this, "Subscription Number must be numeric!", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         // Validate Date Selection
         if (selectedDate.isEmpty()) {
