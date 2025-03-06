@@ -85,9 +85,10 @@ public class LoginActivity extends AppCompatActivity {
             firebaseService.getUserRole(
                     role -> {
                         // Role successfully retrieved; you can use the role if needed
-                        redirectToHome();
                         progressBar.setVisibility(GONE);
                         progressDialog.dismiss();
+                        GlobalVariable.userRole = role;
+                        redirectToHome();
                     },
                     e -> {
                         Toast.makeText(this, "Failed to retrieve user role: " + e.getMessage(), Toast.LENGTH_SHORT).show();

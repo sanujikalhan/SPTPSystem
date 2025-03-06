@@ -25,11 +25,12 @@ import java.util.List;
 import java.util.Locale;
 
 public class BillGeneration extends AppCompatActivity {
-    private TextView lastMonthReading, newLoyaltyPoints;
+    private TextView lastMonthReading, newLoyaltyPoints, billValue;
     private EditText currentMonthReading;
     private Button generateBillButton;
     private  FirebaseService firebaseService;
     private double currentMonthBill = 0;
+    private ElectricityBillCalculator electricityBill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,9 @@ public class BillGeneration extends AppCompatActivity {
         currentMonthReading = findViewById(R.id.current);
         newLoyaltyPoints = findViewById(R.id.points);
         generateBillButton = findViewById(R.id.generateBillButton);
+        billValue = findViewById(R.id.bill_value);
         firebaseService = new FirebaseService();
+        electricityBill = new ElectricityBillCalculator();
 
         currentMonthReading.addTextChangedListener(new TextWatcher() {
             @Override
@@ -64,11 +67,14 @@ public class BillGeneration extends AppCompatActivity {
                         double lastVal = Double.parseDouble(lastText);
                         double loyaltyPoints = LoyaltyCalculator.calculateLoyaltyPoints(lastVal, currentVal);
                         newLoyaltyPoints.setText(String.valueOf(loyaltyPoints));
+                        billValue.setText(String.valueOf(electricityBill.calculateBill(currentVal, false)));
                     } catch (NumberFormatException e) {
                         newLoyaltyPoints.setText("");
+                        billValue.setText("");
                     }
                 } else {
                     newLoyaltyPoints.setText("");
+                    billValue.setText("");
                 }
             }
         });
@@ -93,9 +99,11 @@ public class BillGeneration extends AppCompatActivity {
             lastMonthReading.setText(String.valueOf(lastMonthBill));
             double loyaltyPoints = LoyaltyCalculator.calculateLoyaltyPoints(lastMonthBill, currentMonthBill);
             newLoyaltyPoints.setText(String.valueOf(loyaltyPoints));
+            billValue.setText(String.valueOf(electricityBill.calculateBill(currentMonthBill, false)));
         } else {
             lastMonthReading.setText("N/A");
             newLoyaltyPoints.setText("");
+            billValue.setText("");
         }
 
         generateBillButton.setOnClickListener(new View.OnClickListener() {
