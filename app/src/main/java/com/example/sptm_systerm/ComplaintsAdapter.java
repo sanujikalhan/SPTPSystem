@@ -65,7 +65,7 @@ public class ComplaintsAdapter extends RecyclerView.Adapter<ComplaintsAdapter.Vi
 
             // Set Click Listener on each item
             itemView.setOnClickListener(v -> {
-                if(!GlobalVariable.userRole.equals("Reader"))
+                if(!GlobalVariable.userRole.equals("Technician"))
                     return;
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
